@@ -1,6 +1,5 @@
-
-# Playwright Automation Framework
->>>>>>> 334c213925fd0c761c4f5ba04f8d01be8f23a24b
+Playwright Automation Framework
+Enterprise-Grade UI + API + Utilities Framework
 
 Built using Playwright + TypeScript, with complete implementation of
 EasyMyTrip (Hotels + Flights), Workflow Automation, Enterprise BasePage,
@@ -207,9 +206,89 @@ Headed
 npx playwright test --headed
 
 Only 1 Test
-npx playwright test -g "Hotel Booking
-- Fork the repository and create a new branch for your feature or bug fix.
-- Ensure that your code adheres to the project's coding standards.
-- Write tests for any new features or changes.
-- Submit a pull request for review.
->>>>>>> 334c213925fd0c761c4f5ba04f8d01be8f23a24b
+npx playwright test -g "Hotel Booking"
+
+Open Report
+npx playwright show-report
+
+📊 Test Reporting
+Allure
+
+Generate:
+
+allure generate allure-results --clean -o allure-report
+
+
+Open:
+
+allure open allure-report
+
+
+Playwright automatically attaches:
+
+Screenshot
+
+Video
+
+Trace
+
+Error context
+
+Logs
+
+📤 Excel Export (Auto Test Data Writer)
+
+Your framework now exports:
+
+Hotel list (sorted high → low)
+
+Flight list
+
+Workflow outputs
+
+Auto file name:
+
+test_output/<TestCaseName>_<timestamp>.xlsx
+
+📘 Available Test Suites
+✔ EasyMyTrip – Hotel Booking
+
+Enter city
+
+Apply check-in / check-out
+
+Auto guest selection
+
+Child age randomization
+
+Room summary verification
+
+Sorting hotels
+
+Export hotel list to Excel
+
+✔ EasyMyTrip – Flight Booking
+
+Select flight type
+
+Dynamic date selection
+
+Auto runtime-store date click
+
+Guest logic (adult/child)
+
+Flight list extraction
+
+Dynamic XPath generation
+
+✔ Workflow Automation
+
+Start workflow
+
+Wait for state transition
+
+Read logs
+
+Validate outputs
+
+Enterprise wait loops
