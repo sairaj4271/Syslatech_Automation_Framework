@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 Playwright Automation Framework
 Enterprise-Grade UI + API + Utilities Framework
+=======
+# Playwright Automation Framework
+>>>>>>> 334c213925fd0c761c4f5ba04f8d01be8f23a24b
 
 Built using Playwright + TypeScript, with complete implementation of
 EasyMyTrip (Hotels + Flights), Workflow Automation, Enterprise BasePage,
@@ -208,6 +212,7 @@ npx playwright test --headed
 Only 1 Test
 npx playwright test -g "Hotel Booking"
 
+<<<<<<< HEAD
 Open Report
 npx playwright show-report
 
@@ -292,3 +297,9 @@ Read logs
 Validate outputs
 /...
 Enterprise wait loops
+=======
+- Fork the repository and create a new branch for your feature or bug fix.
+- Ensure that your code adheres to the project's coding standards.
+- Write tests for any new features or changes.
+- Submit a pull request for review.
+>>>>>>> 334c213925fd0c761c4f5ba04f8d01be8f23a24b
