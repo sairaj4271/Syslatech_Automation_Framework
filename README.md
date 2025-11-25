@@ -1,4 +1,4 @@
-# MakeMyTrip Playwright Automation Framework
+# Playwright Automation Framework
 
 An advanced **End-to-End Testing Framework** for MakeMyTrip using Playwright with TypeScript, following Page Object Model (POM) architecture and industry best practices.
 
