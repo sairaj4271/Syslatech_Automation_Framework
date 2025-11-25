@@ -23,13 +23,11 @@ export default defineConfig({
   use: {
     baseURL,
 
-    // CI → Always headless, Local → use your env config
+    // CI → Always headless
     headless: isCI ? true : browserConf.headless,
 
-    // Viewport handling
     viewport: null,
 
-    // Jenkins uses secure args
     launchOptions: isCI
       ? {
           args: ["--no-sandbox", "--disable-setuid-sandbox"],
@@ -41,9 +39,9 @@ export default defineConfig({
     actionTimeout: configManager.getTimeout("action"),
     navigationTimeout: configManager.getTimeout("navigation"),
 
-    screenshot: isCI ? "only-on-failure" : "only-on-failure",
-    video: isCI ? "retain-on-failure" : "retain-on-failure",
-    trace: isCI ? "retain-on-failure" : "retain-on-failure",
+    screenshot: "only-on-failure",
+    video: "retain-on-failure",
+    trace: "retain-on-failure",
   },
 
   retries: isCI ? 2 : 0,
@@ -56,17 +54,20 @@ export default defineConfig({
     },
   ],
 
+  // ------------------------------
+  // CORRECTED REPORTER SECTION
+  // ------------------------------
   reporter: isCI
     ? [
         ["list"],
         ["junit", { outputFile: "reports/results.xml" }],
-        ["html"]
-        ["allure-playwright"],
+        ["html", { outputFolder: "playwright-report" }],
+        ["allure-playwright", { outputFolder: "allure-results" }],
       ]
     : [
         ["list"],
         ["html", { open: "never" }],
         ["junit", { outputFile: "reports/results.xml" }],
-        ["allure-playwright"],
+        ["allure-playwright", { outputFolder: "allure-results" }],
       ],
 });
