@@ -46,7 +46,7 @@ export class EasyMyTripPage extends BasePage {
 
   constructor(page: Page) {
     super(page);
-    this.hotelBooking = this.getLocator('(//span[text()="Hotels"])[1]');
+    this.hotelBooking = this.getLocator('(//span[text()="HOTELS"])[1]');
     this.enterCityName = this.getLocator("//div[contains(@class,'selectHtlCity')]");
     this.enteringCityName = this.getLocator("//input[@id='txtCity']");
     this.check_In = this.getLocator("//span[@id='txtcid']");

@@ -44,8 +44,8 @@ export default defineConfig({
     trace: "retain-on-failure",
   },
 
-  retries: isCI ? 2 : 0,
-  workers: isCI ? 2 : 4,
+  retries: isCI ? 0 : 0,
+  workers: isCI ? 3 : 4,
 
   projects: [
     {
