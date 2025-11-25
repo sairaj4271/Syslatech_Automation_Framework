@@ -1,0 +1,29 @@
+ Wait For Visible → hotelBooking (Timeout: 60000ms)
+[2025-11-25T15:02:29.310Z] [DEBUG] Wait: visible → HOTELS | timeout: 60000ms
+[2025-11-25T15:02:29.442Z] [ERROR] Timeout after 129ms → HOTELS
+[2025-11-25T15:02:29.442Z] [ERROR]  Error in BasePage.waitForElementIsVisible (hotelBooking): locator.waitFor: TypeError: Failed to execute 'evaluate' on 'Document': The result is not a node set, and therefore cannot be converted to the desired type.
+    at Object.queryAll (<anonymous>:5979:25)
+    at InjectedScript._queryEngineAll (<anonymous>:6664:49)
+    at InjectedScript.querySelectorAll (<anonymous>:6651:30)
+    at eval (eval at evaluate (:290:30), <anonymous>:4:35)
+    at UtilityScript.evaluate (<anonymous>:292:16)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+Call log:
+  - waiting for locator('xpath=(//span[text()="HOTELS"])[1] or (//span[text()="Hotels"])[1]') to be visible
+
+[2025-11-25T15:02:29.443Z] [ERROR] locator.waitFor: TypeError: Failed to execute 'evaluate' on 'Document': The result is not a node set, and therefore cannot be converted to the desired type.
+    at Object.queryAll (<anonymous>:5979:25)
+    at InjectedScript._queryEngineAll (<anonymous>:6664:49)
+    at InjectedScript.querySelectorAll (<anonymous>:6651:30)
+    at eval (eval at evaluate (:290:30), <anonymous>:4:35)
+    at UtilityScript.evaluate (<anonymous>:292:16)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+Call log:
+  - waiting for locator('xpath=(//span[text()="HOTELS"])[1] or (//span[text()="Hotels"])[1]') to be visible
+
+    at Function.waitForElementIsVisible (C:\enterprise-playwright-tests\src\utils\waitUtils.ts:116:21)
+    at fn (C:\enterprise-playwright-tests\src\pages\basePage.ts:703:25)
+    at Function.handle (C:\enterprise-playwright-tests\src\utils\errorHandler.ts:71:20)
+    at EasyMyTripPage.waitForElementIsVisible (C:\enterprise-playwright-tests\src\pages\basePage.ts:701:25)
+    at EasyMyTripPage.hotelBookingPage (C:\enterprise-playwright-tests\src\pages\easyMyTrip.ts:87:16)
+    at C:\enterprise-playwright-tests\src\tests\easyMyTrip.spec.ts:14:26

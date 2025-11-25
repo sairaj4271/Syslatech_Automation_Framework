@@ -35,7 +35,7 @@ export class EasyMyTripPageForFlight extends BasePage {
     constructor(page: Page) {
         super(page);    
 
-        this.flightTab =this.getLocator('(//*[text()="FLIGHT+HOTEL"])[1] or (//*[text()="Flight + Hotel"])[1]');
+        this.flightTab =this.getLocator('(//*[text()="FLIGHT+HOTEL"] | //*[text()="Flight + Hotel"])[1]');
         this.departureAirport = this.getLocator('(//*[text()="Departure Airport"])[1]');
         this.fromAirportInput = this.getLocator('(//div[@id="fromautoFill_in"]//input[@type="text"])[1]');
         this.DestinationAirport = this.getLocator('(//*[text()="Destination Airport"])[1]');

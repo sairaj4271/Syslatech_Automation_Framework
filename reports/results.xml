@@ -1,2 +1,91 @@
-<testsuites id="" name="" tests="0" failures="0" skipped="0" errors="0" time="15.243380999999998">
+<testsuites id="" name="" tests="1" failures="1" skipped="0" errors="0" time="821.994471">
+<testsuite name="easyMyTrip.spec.ts" timestamp="2025-11-25T15:02:21.207Z" hostname="chromium" tests="1" failures="1" skipped="0" time="4.771" errors="0">
+<testcase name="EasyMyTrip Hotel Booking Test" classname="easyMyTrip.spec.ts" time="4.771">
+<failure message="easyMyTrip.spec.ts:8:5 EasyMyTrip Hotel Booking Test" type="FAILURE">
+<![CDATA[  [chromium] › easyMyTrip.spec.ts:8:5 › EasyMyTrip Hotel Booking Test ──────────────────────────────
+
+    Error: locator.waitFor: TypeError: Failed to execute 'evaluate' on 'Document': The result is not a node set, and therefore cannot be converted to the desired type.
+        at Object.queryAll (<anonymous>:5979:25)
+        at InjectedScript._queryEngineAll (<anonymous>:6664:49)
+        at InjectedScript.querySelectorAll (<anonymous>:6651:30)
+        at eval (eval at evaluate (:290:30), <anonymous>:4:35)
+        at UtilityScript.evaluate (<anonymous>:292:16)
+        at UtilityScript.<anonymous> (<anonymous>:1:44)
+    Call log:
+      - waiting for locator('xpath=(//span[text()="HOTELS"])[1] or (//span[text()="Hotels"])[1]') to be visible
+
+        at Object.queryAll (<anonymous>:5979:25)
+        at InjectedScript._queryEngineAll (<anonymous>:6664:49)
+        at InjectedScript.querySelectorAll (<anonymous>:6651:30)
+        at eval (eval at evaluate (:290:30), <anonymous>:4:35)
+        at UtilityScript.evaluate (<anonymous>:292:16)
+        at UtilityScript.<anonymous> (<anonymous>:1:44)
+        at Function.waitForElementIsVisible (C:\enterprise-playwright-tests\src\utils\waitUtils.ts:116:21)
+        at fn (C:\enterprise-playwright-tests\src\pages\basePage.ts:703:25)
+        at Function.handle (C:\enterprise-playwright-tests\src\utils\errorHandler.ts:71:20)
+        at EasyMyTripPage.waitForElementIsVisible (C:\enterprise-playwright-tests\src\pages\basePage.ts:701:25)
+        at EasyMyTripPage.hotelBookingPage (C:\enterprise-playwright-tests\src\pages\easyMyTrip.ts:87:16)
+        at C:\enterprise-playwright-tests\src\tests\easyMyTrip.spec.ts:14:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\..\test-results\easyMyTrip-EasyMyTrip-Hotel-Booking-Test-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ..\..\test-results\easyMyTrip-EasyMyTrip-Hotel-Booking-Test-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\test-results\easyMyTrip-EasyMyTrip-Hotel-Booking-Test-chromium\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\test-results\easyMyTrip-EasyMyTrip-Hotel-Booking-Test-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\test-results\easyMyTrip-EasyMyTrip-Hotel-Booking-Test-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[ Wait For Visible → hotelBooking (Timeout: 60000ms)
+[90m[2025-11-25T15:02:29.310Z] [DEBUG] Wait: visible → HOTELS | timeout: 60000ms[0m
+[31m[2025-11-25T15:02:29.442Z] [ERROR] Timeout after 129ms → HOTELS[0m
+[31m[2025-11-25T15:02:29.442Z] [ERROR]  Error in BasePage.waitForElementIsVisible (hotelBooking): locator.waitFor: TypeError: Failed to execute 'evaluate' on 'Document': The result is not a node set, and therefore cannot be converted to the desired type.
+    at Object.queryAll (<anonymous>:5979:25)
+    at InjectedScript._queryEngineAll (<anonymous>:6664:49)
+    at InjectedScript.querySelectorAll (<anonymous>:6651:30)
+    at eval (eval at evaluate (:290:30), <anonymous>:4:35)
+    at UtilityScript.evaluate (<anonymous>:292:16)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+Call log:
+[2m  - waiting for locator('xpath=(//span[text()="HOTELS"])[1] or (//span[text()="Hotels"])[1]') to be visible[22m
+[0m
+[31m[2025-11-25T15:02:29.443Z] [ERROR] locator.waitFor: TypeError: Failed to execute 'evaluate' on 'Document': The result is not a node set, and therefore cannot be converted to the desired type.
+    at Object.queryAll (<anonymous>:5979:25)
+    at InjectedScript._queryEngineAll (<anonymous>:6664:49)
+    at InjectedScript.querySelectorAll (<anonymous>:6651:30)
+    at eval (eval at evaluate (:290:30), <anonymous>:4:35)
+    at UtilityScript.evaluate (<anonymous>:292:16)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+Call log:
+[2m  - waiting for locator('xpath=(//span[text()="HOTELS"])[1] or (//span[text()="Hotels"])[1]') to be visible[22m
+
+    at Function.waitForElementIsVisible (C:\enterprise-playwright-tests\src\utils\waitUtils.ts:116:21)
+    at fn (C:\enterprise-playwright-tests\src\pages\basePage.ts:703:25)
+    at Function.handle (C:\enterprise-playwright-tests\src\utils\errorHandler.ts:71:20)
+    at EasyMyTripPage.waitForElementIsVisible (C:\enterprise-playwright-tests\src\pages\basePage.ts:701:25)
+    at EasyMyTripPage.hotelBookingPage (C:\enterprise-playwright-tests\src\pages\easyMyTrip.ts:87:16)
+    at C:\enterprise-playwright-tests\src\tests\easyMyTrip.spec.ts:14:26[0m
+
+[[ATTACHMENT|..\test-results\easyMyTrip-EasyMyTrip-Hotel-Booking-Test-chromium\test-failed-1.png]]
+
+[[ATTACHMENT|..\test-results\easyMyTrip-EasyMyTrip-Hotel-Booking-Test-chromium\video.webm]]
+
+[[ATTACHMENT|..\test-results\easyMyTrip-EasyMyTrip-Hotel-Booking-Test-chromium\error-context.md]]
+
+[[ATTACHMENT|..\test-results\easyMyTrip-EasyMyTrip-Hotel-Booking-Test-chromium\trace.zip]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
 </testsuites>
