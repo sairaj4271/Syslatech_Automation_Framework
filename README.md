@@ -14,9 +14,6 @@ This README explains:
 📌 1. Project Overview
 
 This framework automates:
-
-✅ MakeMyTrip Hotel Booking
-✅ MakeMyTrip Flight Booking
 ✅ Workflow Testing (Bluecopa Portal Example)
 ✅ Reusable Enterprise Base Framework
 
