@@ -2,20 +2,20 @@ pipeline {
     agent any
 
     environment {
-        // Use pre-installed NodeJS
+        // Use pre-installed NodeJS (Windows path)
         PATH = "C:/Program Files/nodejs/;${env.PATH}"
 
-        // Enable CI mode inside Playwright
+        // Run Playwright in CI mode
         CI = "true"
 
-        // Playwright browser binaries
+        // Use local browser binaries inside node_modules
         PLAYWRIGHT_BROWSERS_PATH = "0"
     }
 
     options {
         timestamps()
         disableConcurrentBuilds()
-        buildDiscarder(logRotator(numToKeepStr: '20'))
+        buildDiscarder(logRotator(numToKeepStr: '15'))
         timeout(time: 40, unit: 'MINUTES')
     }
 
@@ -36,20 +36,23 @@ pipeline {
 
         stage('🌐 Install Playwright Browsers') {
             steps {
-                bat 'npx playwright install --with-deps'
+                bat 'npx playwright install'
             }
         }
 
-        stage('🧪 Run Tests (Parallel Execution)') {
+        stage('🧪 Run Playwright Tests') {
             steps {
                 bat 'npx playwright test --workers=2 --retries=1'
             }
         }
 
-        stage('📊 Generate Allure Report') {
+        stage('📊 Generate Allure Report (Local)') {
             steps {
                 script {
-                    bat 'allure generate allure-results --clean -o allure-report || true'
+                    bat """
+                        if exist allure-report rmdir /s /q allure-report
+                        allure generate allure-results --clean -o allure-report || exit 0
+                    """
                 }
             }
         }
@@ -62,7 +65,7 @@ pipeline {
             }
         }
 
-        stage('📤 Publish Allure Report to Jenkins') {
+        stage('📤 Publish Allure Report') {
             steps {
                 allure includeProperties: false,
                        jdk: '',
@@ -74,17 +77,11 @@ pipeline {
     post {
 
         success {
-            echo "🎉 TESTS PASSED — GREAT JOB!"
-            slackSend channel: '#automation',
-                      message: "✅ *SUCCESS*: Playwright tests passed on Jenkins.",
-                      color: "good"
+            echo "🎉 TESTS PASSED SUCCESSFULLY!"
         }
 
         failure {
-            echo "❌ TESTS FAILED — CHECK REPORTS"
-            slackSend channel: '#automation',
-                      message: "❌ *FAILURE*: Playwright tests failed. See Jenkins reports.",
-                      color: "danger"
+            echo "❌ TEST FAILURE — Check Allure & Playwright reports!"
         }
 
         always {
