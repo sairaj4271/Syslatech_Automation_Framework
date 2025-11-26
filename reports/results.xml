@@ -1,156 +1,50 @@
-<testsuites id="" name="" tests="3" failures="2" skipped="1" errors="0" time="80.723809">
-<testsuite name="easyMyTrip.spec.ts" timestamp="2025-11-26T05:42:25.437Z" hostname="chromium" tests="1" failures="1" skipped="0" time="69.099" errors="0">
-<testcase name="EasyMyTrip Hotel Booking Test" classname="easyMyTrip.spec.ts" time="69.099">
-<failure message="easyMyTrip.spec.ts:8:5 EasyMyTrip Hotel Booking Test" type="FAILURE">
-<![CDATA[  [chromium] › easyMyTrip.spec.ts:8:5 › EasyMyTrip Hotel Booking Test ──────────────────────────────
-
-    TimeoutError: locator.waitFor: Timeout 60000ms exceeded.
-    Call log:
-      - waiting for locator('xpath=(//span[text()="HOTELS"] | //span[text()="Hotels"])[1]') to be visible
-
-
-       at ..\utils\waitUtils.ts:116
-
-      114 |
-      115 |     try {
-    > 116 |       await locator.waitFor({ state: "visible", timeout });
-          |                     ^
-      117 |       logger.debug(`Visible in ${Date.now() - start}ms → ${name}`);
-      118 |     } catch (err) {
-      119 |       logger.error(`Timeout after ${Date.now() - start}ms → ${name}`);
-        at Function.waitForElementIsVisible (C:\enterprise-playwright-tests\src\utils\waitUtils.ts:116:21)
-        at fn (C:\enterprise-playwright-tests\src\pages\basePage.ts:703:25)
-        at Function.handle (C:\enterprise-playwright-tests\src\utils\errorHandler.ts:71:20)
-        at EasyMyTripPage.waitForElementIsVisible (C:\enterprise-playwright-tests\src\pages\basePage.ts:701:25)
-        at EasyMyTripPage.hotelBookingPage (C:\enterprise-playwright-tests\src\pages\easyMyTrip.ts:87:16)
-        at C:\enterprise-playwright-tests\src\tests\easyMyTrip.spec.ts:14:26
-
-    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    ..\..\test-results\easyMyTrip-EasyMyTrip-Hotel-Booking-Test-chromium\test-failed-1.png
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
-    ..\..\test-results\easyMyTrip-EasyMyTrip-Hotel-Booking-Test-chromium\video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    Error Context: ..\..\test-results\easyMyTrip-EasyMyTrip-Hotel-Booking-Test-chromium\error-context.md
-
-    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
-    ..\..\test-results\easyMyTrip-EasyMyTrip-Hotel-Booking-Test-chromium\trace.zip
-    Usage:
-
-        npx playwright show-trace ..\..\test-results\easyMyTrip-EasyMyTrip-Hotel-Booking-Test-chromium\trace.zip
-
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[ Wait For Visible → hotelBooking (Timeout: 60000ms)
-[90m[2025-11-26T05:42:31.078Z] [DEBUG] Wait: visible → HOTELS | timeout: 60000ms[0m
-[31m[2025-11-26T05:43:31.143Z] [ERROR] Timeout after 60064ms → HOTELS[0m
-[31m[2025-11-26T05:43:31.143Z] [ERROR]  Error in BasePage.waitForElementIsVisible (hotelBooking): locator.waitFor: Timeout 60000ms exceeded.
-Call log:
-[2m  - waiting for locator('xpath=(//span[text()="HOTELS"] | //span[text()="Hotels"])[1]') to be visible[22m
-[0m
-[31m[2025-11-26T05:43:31.143Z] [ERROR] locator.waitFor: Timeout 60000ms exceeded.
-Call log:
-[2m  - waiting for locator('xpath=(//span[text()="HOTELS"] | //span[text()="Hotels"])[1]') to be visible[22m
-
-    at Function.waitForElementIsVisible (C:\enterprise-playwright-tests\src\utils\waitUtils.ts:116:21)
-    at fn (C:\enterprise-playwright-tests\src\pages\basePage.ts:703:25)
-    at Function.handle (C:\enterprise-playwright-tests\src\utils\errorHandler.ts:71:20)
-    at EasyMyTripPage.waitForElementIsVisible (C:\enterprise-playwright-tests\src\pages\basePage.ts:701:25)
-    at EasyMyTripPage.hotelBookingPage (C:\enterprise-playwright-tests\src\pages\easyMyTrip.ts:87:16)
-    at C:\enterprise-playwright-tests\src\tests\easyMyTrip.spec.ts:14:26[0m
-
-[[ATTACHMENT|..\test-results\easyMyTrip-EasyMyTrip-Hotel-Booking-Test-chromium\test-failed-1.png]]
-
-[[ATTACHMENT|..\test-results\easyMyTrip-EasyMyTrip-Hotel-Booking-Test-chromium\video.webm]]
-
-[[ATTACHMENT|..\test-results\easyMyTrip-EasyMyTrip-Hotel-Booking-Test-chromium\error-context.md]]
-
-[[ATTACHMENT|..\test-results\easyMyTrip-EasyMyTrip-Hotel-Booking-Test-chromium\trace.zip]]
-]]>
-</system-out>
-</testcase>
-</testsuite>
-<testsuite name="esaymytripfight.spec.ts" timestamp="2025-11-26T05:42:25.437Z" hostname="chromium" tests="1" failures="1" skipped="0" time="70.141" errors="0">
-<testcase name="EasyMyTrip fight Booking Test" classname="esaymytripfight.spec.ts" time="70.141">
-<failure message="esaymytripfight.spec.ts:10:5 EasyMyTrip fight Booking Test" type="FAILURE">
-<![CDATA[  [chromium] › esaymytripfight.spec.ts:10:5 › EasyMyTrip fight Booking Test ────────────────────────
-
-    Error: locator.waitFor: Target page, context or browser has been closed
-    Call log:
-      - waiting for locator('xpath=(//*[text()="FLIGHT+HOTEL"] | //*[text()="Flight + Hotel"])[1]') to be visible
-
-
-       at ..\utils\elementUtils.ts:120
-
-      118 |       logger.debug(`Click → ${label}`);
-      119 |
-    > 120 |       await locator.waitFor({ state: "visible", timeout });
-          |                     ^
-      121 |
-      122 |       try { await locator.scrollIntoViewIfNeeded({ timeout: 4000 }); } catch {}
-      123 |
-        at fn (C:\enterprise-playwright-tests\src\utils\elementUtils.ts:120:21)
-        at Function.retry (C:\enterprise-playwright-tests\src\utils\retryUtils.ts:104:30)
-        at Function.click (C:\enterprise-playwright-tests\src\utils\elementUtils.ts:116:5)
-        at _errorHandler.ErrorHandler.handle.context (C:\enterprise-playwright-tests\src\pages\basePage.ts:380:9)
-        at Function.handle (C:\enterprise-playwright-tests\src\utils\errorHandler.ts:71:14)
-        at EasyMyTripPageForFlight.easyMyTripFlightBookingPage (C:\enterprise-playwright-tests\src\pages\easyMyTripForFlight.ts:64:9)
-        at C:\enterprise-playwright-tests\src\tests\esaymytripfight.spec.ts:13:5
-
-    Error: apiRequestContext._wrapApiCall: Target page, context or browser has been closed
-
-    attachment #1: trace (application/zip) ─────────────────────────────────────────────────────────
-    ..\..\test-results\esaymytripfight-EasyMyTrip-fight-Booking-Test-chromium\trace.zip
-    Usage:
-
-        npx playwright show-trace ..\..\test-results\esaymytripfight-EasyMyTrip-fight-Booking-Test-chromium\trace.zip
-
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
+<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="48.398949">
+<testsuite name="esaymytripfight.spec.ts" timestamp="2025-11-26T07:05:58.631Z" hostname="chromium" tests="1" failures="0" skipped="0" time="45.035" errors="0">
+<testcase name="EasyMyTrip fight Booking Test" classname="esaymytripfight.spec.ts" time="45.035">
 <system-out>
 <![CDATA[ Click → flightTab
-[90m[2025-11-26T05:42:31.081Z] [DEBUG] Click → flightTab[0m
-[33m[2025-11-26T05:43:31.162Z] [WARN] Retry attempt 1/2 failed (60081ms)
-   → locator.waitFor: Timeout 60000ms exceeded.
-Call log:
-[2m  - waiting for locator('xpath=(//*[text()="FLIGHT+HOTEL"] | //*[text()="Flight + Hotel"])[1]') to be visible[22m
-[0m
-[90m[2025-11-26T05:43:31.162Z] [DEBUG] ⏳ Waiting 3814.189159826068ms before retry 2...[0m
-[90m[2025-11-26T05:43:34.991Z] [DEBUG] Click → flightTab[0m
-[31m[2025-11-26T05:43:37.185Z] [ERROR]  Fatal error (no retry) → locator.waitFor: Target page, context or browser has been closed
-Call log:
-[2m  - waiting for locator('xpath=(//*[text()="FLIGHT+HOTEL"] | //*[text()="Flight + Hotel"])[1]') to be visible[22m
-[0m
-[31m[2025-11-26T05:43:37.186Z] [ERROR]  Error in BasePage.click (flightTab): locator.waitFor: Target page, context or browser has been closed
-Call log:
-[2m  - waiting for locator('xpath=(//*[text()="FLIGHT+HOTEL"] | //*[text()="Flight + Hotel"])[1]') to be visible[22m
-[0m
-[31m[2025-11-26T05:43:37.186Z] [ERROR] locator.waitFor: Target page, context or browser has been closed
-Call log:
-[2m  - waiting for locator('xpath=(//*[text()="FLIGHT+HOTEL"] | //*[text()="Flight + Hotel"])[1]') to be visible[22m
-
-    at fn (C:\enterprise-playwright-tests\src\utils\elementUtils.ts:120:21)
-    at Function.retry (C:\enterprise-playwright-tests\src\utils\retryUtils.ts:104:30)
-    at Function.click (C:\enterprise-playwright-tests\src\utils\elementUtils.ts:116:5)
-    at _errorHandler.ErrorHandler.handle.context (C:\enterprise-playwright-tests\src\pages\basePage.ts:380:9)
-    at Function.handle (C:\enterprise-playwright-tests\src\utils\errorHandler.ts:71:14)
-    at EasyMyTripPageForFlight.easyMyTripFlightBookingPage (C:\enterprise-playwright-tests\src\pages\easyMyTripForFlight.ts:64:9)
-    at C:\enterprise-playwright-tests\src\tests\esaymytripfight.spec.ts:13:5[0m
-
-[[ATTACHMENT|..\test-results\esaymytripfight-EasyMyTrip-fight-Booking-Test-chromium\trace.zip]]
+[90m[2025-11-26T07:06:08.847Z] [DEBUG] Click → flightTab[0m
+ Click → RoundTrip
+[90m[2025-11-26T07:06:10.485Z] [DEBUG] Click → RoundTrip[0m
+ Click → departureAirport
+[90m[2025-11-26T07:06:12.143Z] [DEBUG] Click → departureAirport[0m
+ Type → fromAirportInput | Value: chennai | Delay: 0ms
+[90m[2025-11-26T07:06:12.433Z] [DEBUG] Type → fromAirportInput | value="chennai"[0m
+ Click → chennaiOption
+[90m[2025-11-26T07:06:13.637Z] [DEBUG] Click → chennaiOption[0m
+ Click → DestinationAirport
+[90m[2025-11-26T07:06:13.972Z] [DEBUG] Click → DestinationAirport[0m
+ Type → toAirportInput | Value: bangalore | Delay: 0ms
+[90m[2025-11-26T07:06:14.381Z] [DEBUG] Type → toAirportInput | value="bangalore"[0m
+ Click → bangaloreOption
+[90m[2025-11-26T07:06:15.207Z] [DEBUG] Click → bangaloreOption[0m
+ Click → TravelDate
+[90m[2025-11-26T07:06:15.436Z] [DEBUG] Click → TravelDate[0m
+[RUNTIME] STORED → SelectedFlightDate: 26
+ Click → retrunTravelDate
+[90m[2025-11-26T07:06:16.046Z] [DEBUG] Click → retrunTravelDate[0m
+[RUNTIME] STORED → SelectedReturnDate: 01
+ Click → guest
+[90m[2025-11-26T07:06:33.819Z] [DEBUG] Click → guest[0m
+[RUNTIME] STORED → AdultCounts: 1
+ Click → adultplus
+[90m[2025-11-26T07:06:34.344Z] [DEBUG] Click → adultplus[0m
+Adult count increased to 2
+[RUNTIME] STORED → AdultCounts: 2
+ Click → childplus
+[90m[2025-11-26T07:06:34.820Z] [DEBUG] Click → childplus[0m
+Child count increased to 1
+ Click → businessClassOption
+[90m[2025-11-26T07:06:35.320Z] [DEBUG] Click → businessClassOption[0m
+ Click → DoneButton
+[90m[2025-11-26T07:06:35.546Z] [DEBUG] Click → DoneButton[0m
+ Click → searchButton
+[90m[2025-11-26T07:06:35.909Z] [DEBUG] Click → searchButton[0m
+ Wait For Disappear → loader (Timeout: 60000ms)
+[90m[2025-11-26T07:06:37.487Z] [DEBUG] Wait: hidden → id="Loader"]') | timeout: 60000ms[0m
+[90m[2025-11-26T07:06:39.392Z] [DEBUG] Hidden in 1904ms → id="Loader"]')[0m
 ]]>
 </system-out>
-</testcase>
-</testsuite>
-<testsuite name="workflows.spec.ts" timestamp="2025-11-26T05:42:25.437Z" hostname="chromium" tests="1" failures="0" skipped="1" time="70.176" errors="0">
-<testcase name="Workflow Automation › Create Configure Publish Run Workflow Successfully" classname="workflows.spec.ts" time="70.176">
-<skipped>
-</skipped>
 </testcase>
 </testsuite>
 </testsuites>
