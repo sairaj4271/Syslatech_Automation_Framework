@@ -4,7 +4,6 @@ pipeline {
     environment {
         PATH = "C:/Program Files/nodejs/;${env.PATH}"
         CI = "true"
-        // REMOVED: PLAYWRIGHT_BROWSERS_PATH = "0"
     }
 
     options {
@@ -36,7 +35,6 @@ pipeline {
 
         stage('Run Playwright Tests') {
             steps {
-                // Let config control workers (3) or keep --workers=2
                 bat 'npx playwright test --retries=2'
             }
         }
@@ -85,11 +83,11 @@ pipeline {
             echo "🎉 TESTS PASSED"
             emailext(
                 to: 'sairaj@syslatech.com',
-                subject: "Playwright CI — SUCCESS ✔ (${env.TEST_PASSED}/${env.TEST_TOTAL})",
+                subject: "✅ Playwright CI — SUCCESS (${env.TEST_PASSED}/${env.TEST_TOTAL})",
                 body: """
 Hello Sai,
 
-Your Playwright pipeline PASSED.
+Your Playwright pipeline PASSED successfully! 🎉
 
 Test Summary
 -------------------------
@@ -97,12 +95,16 @@ Total:  ${env.TEST_TOTAL}
 Passed: ${env.TEST_PASSED}
 Failed: ${env.TEST_FAILED}
 
-Great job 👍
+View Reports:
+- Allure: ${env.BUILD_URL}allure
+- HTML: ${env.BUILD_URL}artifact/playwright-report/index.html
+
+Great job! 👍
 
 Regards,
 Jenkins
                 """,
-                attachLog: true
+                attachLog: false
             )
         }
 
@@ -110,11 +112,11 @@ Jenkins
             echo "❌ TESTS FAILED"
             emailext(
                 to: 'sairaj@syslatech.com',
-                subject: "Playwright CI — FAILED ❌ (${env.TEST_FAILED} failed)",
+                subject: "❌ Playwright CI — FAILED (${env.TEST_FAILED} failures)",
                 body: """
 Hello Sai,
 
-Your Playwright pipeline FAILED.
+Your Playwright pipeline FAILED ⚠️
 
 Test Summary
 -------------------------
@@ -122,7 +124,12 @@ Total:  ${env.TEST_TOTAL}
 Passed: ${env.TEST_PASSED}
 Failed: ${env.TEST_FAILED}
 
-Check Allure & Playwright HTML reports for details.
+Investigation Links:
+- Allure Report: ${env.BUILD_URL}allure
+- HTML Report: ${env.BUILD_URL}artifact/playwright-report/index.html
+- Console: ${env.BUILD_URL}console
+
+Please check the reports for details.
 
 Regards,
 Jenkins
