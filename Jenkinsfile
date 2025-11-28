@@ -197,7 +197,7 @@ Jenkins Automated Notification
                 
                 emailext(
                     to: 'kandalsairaj4271@gmail.com',
-                    from: 'kandalsairaj95@.com',  // ✅ ADD THIS
+                    from: 'kandalsairaj95@gmail.com',  // ✅ ADD THIS
                     replyTo: 'kandalsairaj4271@gmail.com',
                     subject: "⚠️ Playwright CI — UNSTABLE (${env.TEST_FAILED}/${env.TEST_TOTAL} failed) — Build #${env.BUILD_NUMBER}",
                     body: """
