@@ -48,7 +48,7 @@ pipeline {
                 )]) {
 
                     emailext(
-                        to: 'kandalsairaj4271@gmail.com',
+                        to: 'sairaj@syslatech.com',
                         from: "${SMTP_USER}",
                         replyTo: "${SMTP_USER}",
                         subject: "✅ Playwright CI — SUCCESS — Build #${env.BUILD_NUMBER}",
@@ -95,12 +95,12 @@ Jenkins Automated Notification
                 )]) {
 
                     emailext(
-                        to: 'kandalsairaj4271@gmail.com',
+                        to: 'sairaj@syslatech.com',
                         from: "${SMTP_USER}",
                         replyTo: "${SMTP_USER}",
                         subject: "❌ Playwright CI — FAILED — Build #${env.BUILD_NUMBER}",
                         body: """
-Hello Sai,
+Hello ,
 
 Your Playwright test pipeline FAILED ⚠️
 
@@ -139,7 +139,7 @@ Jenkins Automated Notification
                 )]) {
 
                     emailext(
-                        to: 'kandalsairaj4271@gmail.com',
+                        to: 'sairaj@syslatech.com',
                         from: "${SMTP_USER}",
                         replyTo: "${SMTP_USER}",
                         subject: "⚠️ Playwright CI — UNSTABLE — Build #${env.BUILD_NUMBER}",
