@@ -1,16 +1,12 @@
 pipeline {
-
     agent any
 
     environment {
         PATH = "C:/Program Files/nodejs/;${env.PATH}"
         CI   = "true"
 
-        // ===========================================
-        // 🔵 Default Environment: QA
-        // Options → DEV / QA / PROD
-        // ===========================================
-        ENVIRONMENT = "QA"
+        // Recipients for all emails
+        RECIPIENTS = "sairaj@syslatech.com, deepikadhar@syslatech.com"
     }
 
     options {
@@ -20,36 +16,12 @@ pipeline {
         timeout(time: 40, unit: 'MINUTES')
     }
 
-    // ================================================================
-    // RECIPIENT RESOLVER FUNCTION — Environment Based Email Routing
-    // ================================================================
-    def getRecipients = { envName ->
-        switch(envName.toUpperCase()) {
-
-            case "DEV":
-                return "sairaj@syslatech.com"
-
-            case "QA":
-                return "sairaj@syslatech.com, deepikadhar@syslatech.com"
-
-            case "PROD":
-                return """
-                    sairaj@syslatech.com,
-                    deepikadhar@syslatech.com,
-                    ravi.k@syslatech.com,
-                    chandu.prasad@syslatech.com
-                """.replaceAll("\\s","")
-
-            default:
-                return "sairaj@syslatech.com"
-        }
-    }
-
     stages {
 
         stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/sairaj4271/Syslatech_Playwright.git'
+                git branch: 'main',
+                    url: 'https://github.com/sairaj4271/Syslatech_Playwright.git'
             }
         }
 
@@ -73,7 +45,7 @@ pipeline {
             }
         }
 
-        stage('Generate Allure Report CLI (if installed)') {
+        stage('Generate Allure Report (CLI if available)') {
             steps {
                 script {
                     try {
@@ -94,12 +66,12 @@ pipeline {
                     try {
                         junit allowEmptyResults: true, testResults: 'reports/results.xml'
                     } catch (Exception e) {
-                        echo "⚠ JUnit XML missing or invalid"
+                        echo "⚠ JUnit report archiving failed: ${e.message}"
                     }
 
-                    archiveArtifacts artifacts: 'allure-results/**', allowEmptyArchive: true
-                    archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
-                    archiveArtifacts artifacts: 'test-results/**', allowEmptyArchive: true
+                    archiveArtifacts artifacts: 'allure-results/**',     allowEmptyArchive: true
+                    archiveArtifacts artifacts: 'playwright-report/**',  allowEmptyArchive: true
+                    archiveArtifacts artifacts: 'test-results/**',       allowEmptyArchive: true
                 }
             }
         }
@@ -108,9 +80,11 @@ pipeline {
             steps {
                 script {
                     try {
-                        allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
+                        allure includeProperties: false,
+                               jdk: '',
+                               results: [[path: 'allure-results']]
                     } catch (Exception e) {
-                        echo "⚠ Allure plugin publish failed"
+                        echo "⚠ Allure plugin publish failed: ${e.message}"
                     }
                 }
             }
@@ -119,103 +93,67 @@ pipeline {
 
     post {
 
-        // ============================================================================
-        // ALWAYS — Collect Test Summary + Create ZIP
-        // ============================================================================
         always {
             script {
-
                 echo "🔍 Collecting test summary..."
 
-                def testResultSummary = junit(testResults: 'reports/results.xml', allowEmptyResults: true)
+                def summary = junit(testResults: 'reports/results.xml', allowEmptyResults: true)
 
-                env.TEST_TOTAL   = testResultSummary.totalCount?.toString() ?: "0"
-                env.TEST_PASSED  = testResultSummary.passCount?.toString()  ?: "0"
-                env.TEST_FAILED  = testResultSummary.failCount?.toString()  ?: "0"
-                env.TEST_SKIPPED = testResultSummary.skipCount?.toString()  ?: "0"
-                env.BUILD_STATUS = currentBuild.currentResult ?: "UNKNOWN"
+                env.TEST_TOTAL   = summary.totalCount?.toString() ?: "0"
+                env.TEST_FAILED  = summary.failCount?.toString()  ?: "0"
+                env.TEST_SKIPPED = summary.skipCount?.toString()  ?: "0"
+                env.TEST_PASSED  = summary.passCount?.toString()  ?: "0"
                 env.BUILD_DURATION = currentBuild.durationString.replace(' and counting', '')
+                env.BUILD_STATUS   = currentBuild.currentResult ?: "UNKNOWN"
 
-                echo "📊 Summary → Total:${env.TEST_TOTAL}, Passed:${env.TEST_PASSED}, Failed:${env.TEST_FAILED}"
+                echo "📊 Test Results:"
+                echo "   Total: ${env.TEST_TOTAL}"
+                echo "   Passed: ${env.TEST_PASSED}"
+                echo "   Failed: ${env.TEST_FAILED}"
+                echo "   Skipped: ${env.TEST_SKIPPED}"
+                echo "   Status: ${env.BUILD_STATUS}"
 
-                echo "📦 Creating Playwright ZIP (best-effort)..."
+                echo "📦 Creating ZIP… (safe mode, no failure)"
 
-                int zipStatus = bat(
-                    script: '''
-                        @echo off
-                        if not exist "playwright-report" exit /b 0
-                        where powershell.exe >nul 2>nul || exit /b 0
-
-                        powershell.exe -Command "Compress-Archive -Path 'playwright-report\\*' -DestinationPath 'playwright-report.zip' -Force"
-                    ''',
-                    returnStatus: true
-                )
-
-                if (zipStatus == 0) {
-                    echo "✅ ZIP created"
-                } else {
-                    echo "⚠ ZIP skipped (PowerShell missing)"
-                }
+                bat '''
+                    @echo off
+                    if exist playwright-report (
+                        powershell -Command "Compress-Archive -Path 'playwright-report\\*' -DestinationPath 'playwright-report.zip' -Force"
+                    ) else (
+                        echo No playwright report to zip.
+                    )
+                '''
 
                 archiveArtifacts artifacts: 'playwright-report.zip', allowEmptyArchive: true
             }
         }
 
-        // ============================================================================
+        // =====================================================================
         // SUCCESS EMAIL
-        // ============================================================================
+        // =====================================================================
         success {
             script {
-
-                def recipients = getRecipients(env.ENVIRONMENT)
-
                 withCredentials([usernamePassword(
                     credentialsId: 'gmail-app-password',
                     usernameVariable: 'SMTP_USER',
                     passwordVariable: 'SMTP_PASS'
                 )]) {
-
                     emailext(
-                        to: recipients,
+                        to: env.RECIPIENTS,
                         from: "${SMTP_USER}",
-                        subject: "✅ Playwright CI — SUCCESS — Build #${env.BUILD_NUMBER} (${env.ENVIRONMENT})",
-                        mimeType: 'text/html',
-                        body: """
-                        <html><body>
-                        <h2 style='color:#1a9c33'>Playwright Test Execution Report — SUCCESS</h2>
-                        <p><b>Environment:</b> ${env.ENVIRONMENT}</p>
-
-                        <h3>Summary</h3>
-                        <table border='1' cellpadding='6' cellspacing='0'>
-                            <tr><td><b>Total</b></td><td>${env.TEST_TOTAL}</td></tr>
-                            <tr><td><b>Passed</b></td><td>${env.TEST_PASSED}</td></tr>
-                            <tr><td><b>Failed</b></td><td>${env.TEST_FAILED}</td></tr>
-                            <tr><td><b>Skipped</b></td><td>${env.TEST_SKIPPED}</td></tr>
-                            <tr><td><b>Duration</b></td><td>${env.BUILD_DURATION}</td></tr>
-                        </table>
-
-                        <h3>View Reports</h3>
-                        <ul>
-                            <li><a href="${env.BUILD_URL}artifact/playwright-report/index.html">HTML Report</a></li>
-                            <li><a href="${env.BUILD_URL}allure">Allure Report</a></li>
-                            <li><a href="${env.BUILD_URL}artifact">Artifacts</a></li>
-                            <li><a href="${env.BUILD_URL}console">Console Log</a></li>
-                        </ul>
-                        </body></html>
-                        """
+                        subject: "✅ Playwright CI — SUCCESS — Build #${env.BUILD_NUMBER}",
+                        mimeType: "text/html",
+                        body: generateHtmlEmail("SUCCESS")
                     )
                 }
             }
         }
 
-        // ============================================================================
+        // =====================================================================
         // FAILURE EMAIL
-        // ============================================================================
+        // =====================================================================
         failure {
             script {
-
-                def recipients = getRecipients(env.ENVIRONMENT)
-
                 withCredentials([usernamePassword(
                     credentialsId: 'gmail-app-password',
                     usernameVariable: 'SMTP_USER',
@@ -223,48 +161,24 @@ pipeline {
                 )]) {
 
                     emailext(
-                        to: recipients,
+                        to: env.RECIPIENTS,
                         from: "${SMTP_USER}",
-                        subject: "❌ Playwright CI — FAILED — Build #${env.BUILD_NUMBER} (${env.ENVIRONMENT})",
-                        mimeType: 'text/html',
+                        subject: "❌ Playwright CI — FAILED — Build #${env.BUILD_NUMBER}",
+                        mimeType: "text/html",
                         attachLog: true,
                         compressLog: true,
                         attachmentsPattern: 'playwright-report.zip, test-results/**/*.png, test-results/**/*.zip',
-                        body: """
-                        <html><body>
-                        <h2 style='color:#d52828'>Playwright Test Execution Report — FAILED</h2>
-                        <p><b>Environment:</b> ${env.ENVIRONMENT}</p>
-
-                        <h3>Summary</h3>
-                        <table border='1' cellpadding='6' cellspacing='0'>
-                            <tr><td><b>Total</b></td><td>${env.TEST_TOTAL}</td></tr>
-                            <tr><td><b>Passed</b></td><td>${env.TEST_PASSED}</td></tr>
-                            <tr><td><b>Failed</b></td><td>${env.TEST_FAILED}</td></tr>
-                            <tr><td><b>Skipped</b></td><td>${env.TEST_SKIPPED}</td></tr>
-                        </table>
-
-                        <h3>Quick Links</h3>
-                        <ul>
-                            <li><a href="${env.BUILD_URL}allure">Allure Report</a></li>
-                            <li><a href="${env.BUILD_URL}artifact/playwright-report/index.html">HTML Report</a></li>
-                            <li><a href="${env.BUILD_URL}artifact">Screenshots / Traces</a></li>
-                            <li><a href="${env.BUILD_URL}console">Console Log</a></li>
-                        </ul>
-                        </body></html>
-                        """
+                        body: generateHtmlEmail("FAILED")
                     )
                 }
             }
         }
 
-        // ============================================================================
+        // =====================================================================
         // UNSTABLE EMAIL
-        // ============================================================================
+        // =====================================================================
         unstable {
             script {
-
-                def recipients = getRecipients(env.ENVIRONMENT)
-
                 withCredentials([usernamePassword(
                     credentialsId: 'gmail-app-password',
                     usernameVariable: 'SMTP_USER',
@@ -272,37 +186,76 @@ pipeline {
                 )]) {
 
                     emailext(
-                        to: recipients,
+                        to: env.RECIPIENTS,
                         from: "${SMTP_USER}",
-                        subject: "⚠️ Playwright CI — UNSTABLE — Build #${env.BUILD_NUMBER} (${env.ENVIRONMENT})",
-                        mimeType: 'text/html',
+                        subject: "⚠️ Playwright CI — UNSTABLE — Build #${env.BUILD_NUMBER}",
+                        mimeType: "text/html",
                         attachLog: true,
                         compressLog: true,
                         attachmentsPattern: 'playwright-report.zip',
-                        body: """
-                        <html><body>
-                        <h2 style='color:#d58f00'>Playwright Test Execution Report — UNSTABLE</h2>
-                        <p><b>Environment:</b> ${env.ENVIRONMENT}</p>
-
-                        <h3>Summary</h3>
-                        <table border='1' cellpadding='6' cellspacing='0'>
-                            <tr><td><b>Total</b></td><td>${env.TEST_TOTAL}</td></tr>
-                            <tr><td><b>Passed</b></td><td>${env.TEST_PASSED}</td></tr>
-                            <tr><td><b>Failed</b></td><td>${env.TEST_FAILED}</td></tr>
-                            <tr><td><b>Skipped</b></td><td>${env.TEST_SKIPPED}</td></tr>
-                        </table>
-
-                        <h3>Reports</h3>
-                        <ul>
-                            <li><a href="${env.BUILD_URL}allure">Allure Report</a></li>
-                            <li><a href="${env.BUILD_URL}artifact/playwright-report/index.html">HTML Report</a></li>
-                            <li><a href="${env.BUILD_URL}console">Console Log</a></li>
-                        </ul>
-                        </body></html>
-                        """
+                        body: generateHtmlEmail("UNSTABLE")
                     )
                 }
             }
         }
     }
+}
+
+// ============================================================================
+// HTML Email Template Generator
+// ============================================================================
+def generateHtmlEmail(String status) {
+
+    def statusColor = [
+        "SUCCESS":  "#1a9c33",
+        "FAILED":   "#d52828",
+        "UNSTABLE": "#d58f00"
+    ][status]
+
+    def title = [
+        "SUCCESS":  "🎉 Playwright Test Execution — SUCCESS",
+        "FAILED":   "❌ Playwright Test Execution — FAILED",
+        "UNSTABLE": "⚠️ Playwright Test Execution — UNSTABLE"
+    ][status]
+
+    return """
+<html>
+<head>
+<style>
+  body { font-family: Arial; font-size: 14px; }
+  h2 { color: ${statusColor}; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border: 1px solid #ddd; padding: 8px; }
+  th { background: #f5f5f5; }
+</style>
+</head>
+<body>
+
+<h2>${title}</h2>
+
+<h3>📊 Test Summary</h3>
+<table>
+<tr><th>Property</th><th>Value</th></tr>
+<tr><td>Build Status</td><td>${env.BUILD_STATUS}</td></tr>
+<tr><td>Build Number</td><td>#${env.BUILD_NUMBER}</td></tr>
+<tr><td>Total Tests</td><td>${env.TEST_TOTAL}</td></tr>
+<tr><td>Passed</td><td>${env.TEST_PASSED}</td></tr>
+<tr><td>Failed</td><td>${env.TEST_FAILED}</td></tr>
+<tr><td>Skipped</td><td>${env.TEST_SKIPPED}</td></tr>
+<tr><td>Duration</td><td>${env.BUILD_DURATION}</td></tr>
+<tr><td>Browser</td><td>chromium</td></tr>
+</table>
+
+<h3>📄 Reports</h3>
+<ul>
+<li><a href="${env.BUILD_URL}artifact/playwright-report/index.html">Playwright HTML Report</a></li>
+<li><a href="${env.BUILD_URL}allure">Allure Report</a></li>
+<li><a href="${env.BUILD_URL}artifact">All Artifacts</a></li>
+<li><a href="${env.BUILD_URL}console">Console Log</a></li>
+</ul>
+
+<p style="color:#888;font-size:12px;margin-top:20px">Jenkins Automated Notification</p>
+
+</body></html>
+"""
 }
