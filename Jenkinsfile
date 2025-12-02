@@ -5,8 +5,8 @@ pipeline {
         PATH = "C:/Program Files/nodejs/;${env.PATH}"
         CI   = "true"
 
-        // Recipients for all emails (NO SPACES after comma)
-        RECIPIENTS = "sairaj@syslatech.com,deepikadhar@syslatech.com"
+        // ✔ MULTIPLE EMAIL RECIPIENTS (semicolon-separated)
+        RECIPIENTS = "sairaj@syslatech.com;deepikadhar@syslatech.com"
     }
 
     options {
@@ -80,7 +80,7 @@ pipeline {
 
         always {
             script {
-                echo "🔍 Collecting test summary..."
+                echo "📊 Collecting test summary..."
 
                 def summary = junit(testResults: 'reports/results.xml', allowEmptyResults: true)
 
@@ -91,31 +91,27 @@ pipeline {
                 env.BUILD_DURATION = currentBuild.durationString.replace(' and counting', '')
                 env.BUILD_STATUS   = currentBuild.currentResult ?: "UNKNOWN"
 
-                echo "📊 Test Results:"
-                echo "   Total: ${env.TEST_TOTAL}"
-                echo "   Passed: ${env.TEST_PASSED}"
-                echo "   Failed: ${env.TEST_FAILED}"
-                echo "   Skipped: ${env.TEST_SKIPPED}"
-                echo "   Status: ${env.BUILD_STATUS}"
+                echo "Total: ${env.TEST_TOTAL}"
+                echo "Passed: ${env.TEST_PASSED}"
+                echo "Failed: ${env.TEST_FAILED}"
+                echo "Skipped: ${env.TEST_SKIPPED}"
 
-                echo "📦 Creating ZIP… (safe mode, no failure)"
+                // Create ZIP without failing pipeline
+                echo "📦 Creating ZIP..."
 
-                // Fixed: Use bat for each command separately to avoid PowerShell issues
                 try {
                     bat '''
                         @echo off
                         if exist playwright-report (
-                            echo Zipping playwright-report...
+                            echo Creating zip...
                             tar -a -cf playwright-report.zip playwright-report
-                            echo ZIP created successfully
                         ) else (
-                            echo No playwright report to zip.
+                            echo No report folder found.
                         )
                     '''
-                    
                     archiveArtifacts artifacts: 'playwright-report.zip', allowEmptyArchive: true
                 } catch (Exception e) {
-                    echo "⚠ ZIP creation skipped: ${e.message}"
+                    echo "⚠ ZIP creation failed (ignored): ${e.message}"
                 }
             }
         }
@@ -151,7 +147,6 @@ pipeline {
                     usernameVariable: 'SMTP_USER',
                     passwordVariable: 'SMTP_PASS'
                 )]) {
-
                     emailext(
                         to: env.RECIPIENTS,
                         from: "${SMTP_USER}",
@@ -173,10 +168,9 @@ pipeline {
             script {
                 withCredentials([usernamePassword(
                     credentialsId: 'gmail-app-password',
-                    usernameVariable: 'SMTP_USER',
-                    passwordVariable: 'SMTP_PASS'
+                    usernameVariable: 'SMTP_USER",
+                    passwordVariable: "SMTP_PASS"
                 )]) {
-
                     emailext(
                         to: env.RECIPIENTS,
                         from: "${SMTP_USER}",
@@ -228,9 +222,9 @@ def generateHtmlEmail(String status) {
 <h3>📊 Test Summary</h3>
 <table>
 <tr><th>Property</th><th>Value</th></tr>
-<tr><td>Build Status</td><td>${env.BUILD_STATUS}</td></tr>
-<tr><td>Build Number</td><td>#${env.BUILD_NUMBER}</td></tr>
-<tr><td>Total Tests</td><td>${env.TEST_TOTAL}</td></tr>
+<tr><td>Build Number</td><td>${env.BUILD_NUMBER}</td></tr>
+<tr><td>Status</td><td>${env.BUILD_STATUS}</td></tr>
+<tr><td>Total</td><td>${env.TEST_TOTAL}</td></tr>
 <tr><td>Passed</td><td>${env.TEST_PASSED}</td></tr>
 <tr><td>Failed</td><td>${env.TEST_FAILED}</td></tr>
 <tr><td>Skipped</td><td>${env.TEST_SKIPPED}</td></tr>
@@ -242,11 +236,11 @@ def generateHtmlEmail(String status) {
 <ul>
 <li><a href="${env.BUILD_URL}artifact/playwright-report/index.html">Playwright HTML Report</a></li>
 <li><a href="${env.BUILD_URL}allure">Allure Report</a></li>
-<li><a href="${env.BUILD_URL}artifact">All Artifacts</a></li>
+<li><a href="${env.BUILD_URL}artifact">Artifacts</a></li>
 <li><a href="${env.BUILD_URL}console">Console Log</a></li>
 </ul>
 
-<p style="color:#888;font-size:12px;margin-top:20px">Jenkins Automated Notification</p>
+<p style="font-size:12px;color:#888;">Jenkins Automated Notification</p>
 
 </body></html>
 """
