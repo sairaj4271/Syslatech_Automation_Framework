@@ -5,8 +5,8 @@ pipeline {
         PATH = "C:/Program Files/nodejs/;${env.PATH}"
         CI   = "true"
 
-        // Recipients for all emails
-        RECIPIENTS = "sairaj@syslatech.com, deepikadhar@syslatech.com"
+        // Recipients for all emails (NO SPACES after comma)
+        RECIPIENTS = "sairaj@syslatech.com,deepikadhar@syslatech.com"
     }
 
     options {
@@ -41,21 +41,6 @@ pipeline {
             steps {
                 catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
                     bat 'npx playwright test --retries=2'
-                }
-            }
-        }
-
-        stage('Generate Allure Report (CLI if available)') {
-            steps {
-                script {
-                    try {
-                        bat '''
-                            if exist allure-report rmdir /s /q allure-report
-                            allure generate allure-results --clean -o allure-report
-                        '''
-                    } catch (Exception e) {
-                        echo "⚠ Allure CLI not found, using Jenkins plugin"
-                    }
                 }
             }
         }
@@ -115,16 +100,23 @@ pipeline {
 
                 echo "📦 Creating ZIP… (safe mode, no failure)"
 
-                bat '''
-                    @echo off
-                    if exist playwright-report (
-                        powershell -Command "Compress-Archive -Path 'playwright-report\\*' -DestinationPath 'playwright-report.zip' -Force"
-                    ) else (
-                        echo No playwright report to zip.
-                    )
-                '''
-
-                archiveArtifacts artifacts: 'playwright-report.zip', allowEmptyArchive: true
+                // Fixed: Use bat for each command separately to avoid PowerShell issues
+                try {
+                    bat '''
+                        @echo off
+                        if exist playwright-report (
+                            echo Zipping playwright-report...
+                            tar -a -cf playwright-report.zip playwright-report
+                            echo ZIP created successfully
+                        ) else (
+                            echo No playwright report to zip.
+                        )
+                    '''
+                    
+                    archiveArtifacts artifacts: 'playwright-report.zip', allowEmptyArchive: true
+                } catch (Exception e) {
+                    echo "⚠ ZIP creation skipped: ${e.message}"
+                }
             }
         }
 
