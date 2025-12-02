@@ -1,12 +1,13 @@
 // ============================================================================
-// LOGGER (Enterprise Grade)
+// LOGGER (Merged Enterprise Edition)
 // ----------------------------------------------------------------------------
-// - Supports DEBUG, INFO, WARN, ERROR, PASS, FAIL
-// - Auto-creates /logs directory
-// - Daily log rotation: logs/test_YYYY-MM-DD.log
+// - Supports: DEBUG, INFO, WARN, ERROR, PASS, FAIL
+// - Auto-creates logs/ directory
+// - Daily log rotation → logs/api-test-YYYY-MM-DD.log
 // - Color-coded console output
-// - Supports module-level child loggers (logger.child("WorkflowPage"))
-// - Controlled via LOG_LEVEL env variable (default: DEBUG)
+// - Singleton instance (Logger.getInstance())
+// - Supports LOG_LEVEL filtering (INFO, WARN, ERROR etc.)
+// - Backward compatible with your old logger API
 // ============================================================================
 
 import * as fs from "fs";
@@ -16,24 +17,24 @@ import * as path from "path";
 // LOG LEVEL ENUM
 // ----------------------------------------------------------------------------
 export enum LogLevel {
+  DEBUG = "DEBUG",
   INFO = "INFO",
   WARN = "WARN",
   ERROR = "ERROR",
-  DEBUG = "DEBUG",
   PASS = "PASS",
   FAIL = "FAIL",
 }
 
 // ----------------------------------------------------------------------------
-// TERMINAL COLORS (console output)
+// TERMINAL COLORS
 // ----------------------------------------------------------------------------
-const COLORS = {
-  INFO: "\x1b[36m",   // cyan
-  WARN: "\x1b[33m",   // yellow
-  ERROR: "\x1b[31m",  // red
-  DEBUG: "\x1b[90m",  // grey
-  PASS: "\x1b[32m",   // green
-  FAIL: "\x1b[31m",   // red
+const COLORS: Record<string, string> = {
+  DEBUG: "\x1b[90m", // grey
+  INFO: "\x1b[36m",  // cyan
+  WARN: "\x1b[33m",  // yellow
+  ERROR: "\x1b[31m", // red
+  PASS: "\x1b[32m",  // green
+  FAIL: "\x1b[31m",  // red
   RESET: "\x1b[0m",
 };
 
@@ -41,41 +42,38 @@ const COLORS = {
 // LOGGER CLASS
 // ============================================================================
 export class Logger {
-  private readonly logDir: string;
+  private static instance: Logger;
+  private readonly logDir: string = "logs";
   private readonly logFile: string;
-  private readonly component?: string;
+  private readonly currentLevel: LogLevel;
 
-  // LOG LEVEL: default = DEBUG (logs everything)
-  private readonly currentLevel =
-    process.env.LOG_LEVEL?.toUpperCase() || "DEBUG";
-
-  constructor(component?: string) {
-    this.component = component;
-
-    // Directory where logs are stored → /logs
-    this.logDir = path.join(process.cwd(), "logs");
-
-    // Daily rotating log file → test_2025-11-21.log
-    const date = new Date().toISOString().split("T")[0];
-    this.logFile = path.join(this.logDir, `test_${date}.log`);
-
-    // Ensure /logs directory exists
+  private constructor() {
+    // Create /logs directory if missing
     if (!fs.existsSync(this.logDir)) {
       fs.mkdirSync(this.logDir, { recursive: true });
     }
+
+    // Daily rotating file
+    const today = new Date().toISOString().split("T")[0];
+    this.logFile = path.join(this.logDir, `api-test-${today}.log`);
+
+    // LOG_LEVEL from env, fallback to DEBUG
+    const envLevel = process.env.LOG_LEVEL?.toUpperCase() as LogLevel;
+    this.currentLevel = LogLevel[envLevel] ? envLevel : LogLevel.DEBUG;
   }
 
   // ----------------------------------------------------------------------------
-  // Create a sub-logger: logger.child("WorkflowPage")
-  // Outputs:
-  // [INFO] [WorkflowPage] Message Here
+  // Singleton Instance
   // ----------------------------------------------------------------------------
-  public child(component: string): Logger {
-    return new Logger(component);
+  public static getInstance(): Logger {
+    if (!Logger.instance) {
+      Logger.instance = new Logger();
+    }
+    return Logger.instance;
   }
 
   // ----------------------------------------------------------------------------
-  // Checks if log level should be printed based on LOG_LEVEL priority
+  // Should log? (based on LOG_LEVEL priority)
   // ----------------------------------------------------------------------------
   private shouldLog(level: LogLevel): boolean {
     const priority: Record<LogLevel, number> = {
@@ -87,59 +85,53 @@ export class Logger {
       DEBUG: 5,
     };
 
-    return priority[level] <= priority[this.currentLevel as LogLevel];
+    return priority[level] <= priority[this.currentLevel];
   }
 
   // ----------------------------------------------------------------------------
-  // Formats log line with timestamp and component
+  // Format message
   // ----------------------------------------------------------------------------
-  private formatMessage(level: LogLevel, message: string, data?: any): string {
+  private format(level: LogLevel, message: string, data?: any): string {
     const timestamp = new Date().toISOString();
-    const extras = data ? ` | ${JSON.stringify(data)}` : "";
-    const comp = this.component ? `[${this.component}] ` : "";
-    return `[${timestamp}] [${level}] ${comp}${message}${extras}`;
+    const details = data ? `\n${JSON.stringify(data, null, 2)}` : "";
+    return `[${timestamp}] [${level}] ${message}${details}`;
   }
 
   // ----------------------------------------------------------------------------
-  // Writes line into the file (async, non-blocking)
+  // Write to file + console (non-blocking file operation)
   // ----------------------------------------------------------------------------
-  private write(line: string) {
-    fs.appendFile(this.logFile, line + "\n", () => {});
-  }
-
-  // ----------------------------------------------------------------------------
-  // Prints colored output to console + writes to log file
-  // ----------------------------------------------------------------------------
-  private print(level: LogLevel, message: string, data?: any) {
+  private output(level: LogLevel, message: string, data?: any) {
     if (!this.shouldLog(level)) return;
 
-    const formatted = this.formatMessage(level, message, data);
-    const color = COLORS[level] || "";
-    const reset = COLORS.RESET;
+    const formatted = this.format(level, message, data);
 
-    console.log(color + formatted + reset); // console
-    this.write(formatted);                  // file
+    // Console output (colored)
+    const color = COLORS[level] || "";
+    console.log(color + formatted + COLORS.RESET);
+
+    // File output async
+    fs.appendFile(this.logFile, formatted + "\n", () => {});
   }
 
-  // ============================================================================
-  // PUBLIC LOGGING METHODS
-  // ============================================================================
-  info(msg: string, data?: any) { this.print(LogLevel.INFO, msg, data); }
-  warn(msg: string, data?: any) { this.print(LogLevel.WARN, msg, data); }
-  error(msg: string, data?: any) { this.print(LogLevel.ERROR, msg, data); }
-  debug(msg: string, data?: any) { this.print(LogLevel.DEBUG, msg, data); }
-  pass(msg: string, data?: any) { this.print(LogLevel.PASS, msg, data); }
-  fail(msg: string, data?: any) { this.print(LogLevel.FAIL, msg, data); }
+  // ======================================================================
+  // PUBLIC LOG METHODS
+  // ======================================================================
+  debug(msg: string, data?: any) { this.output(LogLevel.DEBUG, msg, data); }
+  info(msg: string, data?: any) { this.output(LogLevel.INFO, msg, data); }
+  warn(msg: string, data?: any) { this.output(LogLevel.WARN, msg, data); }
+  error(msg: string, data?: any) { this.output(LogLevel.ERROR, msg, data); }
 
-  // ----------------------------------------------------------------------------
-  // Expose underlying log file path (optional)
-  // ----------------------------------------------------------------------------
+  // Enterprise extra logs
+  pass(msg: string, data?: any) { this.output(LogLevel.PASS, msg, data); }
+  fail(msg: string, data?: any) { this.output(LogLevel.FAIL, msg, data); }
+
+  // Get log file path (optional)
   getLogFile(): string {
     return this.logFile;
   }
 }
 
 // ============================================================================
-// DEFAULT GLOBAL LOGGER
+// DEFAULT EXPORT
 // ============================================================================
-export const logger = new Logger();
+export const logger = Logger.getInstance();

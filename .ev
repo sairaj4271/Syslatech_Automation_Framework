@@ -1,0 +1,11 @@
+# ======================================
+# API SETTINGS
+# ======================================
+
+API_BASE_URL=https://reqres.in/api
+API_TIMEOUT=30000
+RETRY_ATTEMPTS=3
+ENV=local
+
+# OPTIONAL: manual token
+MANUAL_TOKEN=

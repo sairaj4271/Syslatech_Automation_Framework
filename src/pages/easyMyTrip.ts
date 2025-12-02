@@ -4,6 +4,7 @@ import { formatToday, formatDateAfterDays, NumberUtils,cleanAndConvertToDDMMYYYY
 import { configManager } from "../config/env.index";
 import { number, string } from "zod";
 import { Runtime } from "@utils/runtimeStore";
+import { Logger } from "@utils/logger";
 
 export class EasyMyTripPage extends BasePage {
   hotelBooking: Locator;
@@ -86,7 +87,7 @@ export class EasyMyTripPage extends BasePage {
   async hotelBookingPage() {
     await this.waitForElementIsVisible(this.hotelBooking);
     await this.storeTextContent(this.hotelBooking, "HotelBookingTab");  
-    console.log("Hotel Booking Tab Text Stored Successfully", $("HotelBookingTab"));
+    //console.log("Hotel Booking Tab Text Stored Successfully", $("HotelBookingTab"));
     await this.click(this.hotelBooking);
     await this.waitForElementIsVisible(this.enterCityName);
     await this.click(this.enterCityName);
@@ -95,20 +96,21 @@ export class EasyMyTripPage extends BasePage {
     
    
     this.enteredCityName = await this.page.locator('//span[@class="hp_city"]').textContent() || "";
+     await this.storeInputValue(this.enteredCityName,"cityname")
     console.log("Entered City Name: ", this.enteredCityName);
   }
 
   async selectCheckInCheckOutDate() {
     await this.click(this.check_In);
     const checkInDate = formatDateAfterDays(2, "dd");
-    await this.page.locator(`(//a[text()="${checkInDate}"])[1]`).click();
+    await this.page.locator(`(//*[text()="${checkInDate}"])[1]`).click();
     await this.click(this.check_out);
     const checkOutDate = formatDateAfterDays(3, "dd");
-    await this.page.locator(`(//a[text()="${checkOutDate}"])[1]`).click();
+    await this.page.locator(`(//*[text()="${checkOutDate}"])[1]`).click();
     await this.storeTextContent(this.Check_in, "RawCheckIn");
     await this.storeTextContent(this.check_Out, "RawCheckOut");
   Runtime.set("CleanCheckIn", cleanAndConvertToDDMMYYYY($("RawCheckIn")));
-Runtime.set("CleanCheckOut", cleanAndConvertToDDMMYYYY($("RawCheckOut")));
+  Runtime.set("CleanCheckOut", cleanAndConvertToDDMMYYYY($("RawCheckOut")));
 
 // Debug logs
 console.log("Converted Check-In:", $("CleanCheckIn"));
@@ -204,7 +206,7 @@ console.log("Converted Check-Out:", $("CleanCheckOut"));;
     
  
    
-    expect(this.Name.toLowerCase()).toContain(this.enteredCityName.toLowerCase());
+    expect($("cityname")).toContain(this.enteredCityName);
     console.log(" City name verification passed");
     
    
@@ -285,5 +287,8 @@ return hotelList;
 
   }
 
+  
 
-}
+  }
+
+

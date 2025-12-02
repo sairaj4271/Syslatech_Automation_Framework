@@ -96,14 +96,16 @@ export class EasyMyTripPageForFlight extends BasePage {
    async selectFlightDates() {
 
         await this.click(this.TravelDate);
-        Runtime.set("SelectedFlightDate", formatToday("dd"));
-           
-        await this.page.locator(`(//span[contains(text(),"${$("SelectedFlightDate")}")])[1]`).click();
+        //Runtime.set("SelectedFlightDate", formatToday("dd"));
+        const SelectedFlightDate = await formatToday("dd");
+        await this.page.locator(`(//span[contains(text(),"${SelectedFlightDate}") and contains(@class, "mat-calendar-body-cell-content mat-focus-indicator mat-calendar-body")])[1]`).click();
               
        
         await this.click(this.retrunTravelDate);
-        Runtime.set("SelectedReturnDate", formatDateAfterDays(5,"dd"));
-        await this.page.locator(`(//span[contains(text(),"${$("SelectedReturnDate")}")])[2]`).click();
+        //Runtime.set("SelectedReturnDate", formatDateAfterDays(5,"dd"));
+
+       const   SelectedReturnDate  =   await  formatDateAfterDays(5,"dd")
+        await this.page.locator(`(//span[contains(text(),"${SelectedReturnDate}") and contains(@class, "mat-calendar-body-cell-content mat-focus-indicator mat-calendar-body")])[1]`).click();
         
    }
 
@@ -163,10 +165,11 @@ export class EasyMyTripPageForFlight extends BasePage {
   console.log("Highest Hotel:", highestHotel);
 
  
-  Runtime.set("highest_hotel", highestHotel.name);
+              //Runtime.set("highest_hotel", highestHotel.name);
+  const highest_hotel  = await highestHotel.name
   console.log($("highest_hotel")) 
 
-   await this.page.locator(`//div[contains(text(),"${$("highest_hotel")}")]/../../..//*[text()="View Details"]`).click()
+   await this.page.locator(`//div[contains(text(),"${highest_hotel}")]/../../..//*[text()="View Details"]`).click()
 
    return hotelList;
 }

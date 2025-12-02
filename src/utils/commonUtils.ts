@@ -45,8 +45,8 @@ export function capitalizeFirstLetter(str: string): string {
 export function formatToday(format: string): string {
     const date = new Date();
 
-    const dd = String(date.getDate()).padStart(2, "0");
-    const mm = String(date.getMonth() + 1).padStart(2, "0");
+    const dd = String(date.getDate());
+    const mm = String(date.getMonth() + 1);
     const yyyy = String(date.getFullYear());
 
     return format
@@ -58,15 +58,14 @@ export function formatDateAfterDays(days: number, format: string): string {
     const date = new Date();
     date.setDate(date.getDate() + days);
 
-    const dd = String(date.getDate()).padStart(2, "0");
-    const mm = String(date.getMonth() + 1).padStart(2, "0");
+    const dd = String(date.getDate());           // No padStart → gives 1, 2, 3, 10, 11, 12
+    const mm = String(date.getMonth() + 1);      // Same here
     const yyyy = String(date.getFullYear());
 
     return format
         .replace(/dd/g, dd)
         .replace(/mm/g, mm)
         .replace(/yyyy/g, yyyy);
-        
 }
 
 export class NumberUtils {

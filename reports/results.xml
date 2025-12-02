@@ -1,72 +1,1280 @@
-<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="36.539024">
-<testsuite name="esaymytripfight.spec.ts" timestamp="2025-11-26T12:12:19.810Z" hostname="chromium" tests="1" failures="0" skipped="0" time="33.87" errors="0">
-<testcase name="EasyMyTrip fight Booking Test" classname="esaymytripfight.spec.ts" time="33.87">
+<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="258.513087">
+<testsuite name="workflows.spec.ts" timestamp="2025-12-01T10:33:45.117Z" hostname="chromium" tests="1" failures="0" skipped="0" time="257.076" errors="0">
+<testcase name="Workflow Automation › Create Configure Publish Run Workflow Successfully" classname="workflows.spec.ts" time="257.076">
 <system-out>
-<![CDATA[ Click → flightTab
-[90m[2025-11-26T12:12:28.341Z] [DEBUG] Click → flightTab[0m
- Click → RoundTrip
-[90m[2025-11-26T12:12:29.516Z] [DEBUG] Click → RoundTrip[0m
- Click → departureAirport
-[90m[2025-11-26T12:12:30.951Z] [DEBUG] Click → departureAirport[0m
- Type → fromAirportInput | Value: chennai | Delay: 0ms
-[90m[2025-11-26T12:12:31.210Z] [DEBUG] Type → fromAirportInput | value="chennai"[0m
- Click → chennaiOption
-[90m[2025-11-26T12:12:32.150Z] [DEBUG] Click → chennaiOption[0m
- Click → DestinationAirport
-[90m[2025-11-26T12:12:32.432Z] [DEBUG] Click → DestinationAirport[0m
- Type → toAirportInput | Value: bangalore | Delay: 0ms
-[90m[2025-11-26T12:12:32.660Z] [DEBUG] Type → toAirportInput | value="bangalore"[0m
- Click → bangaloreOption
-[90m[2025-11-26T12:12:33.498Z] [DEBUG] Click → bangaloreOption[0m
- Click → TravelDate
-[90m[2025-11-26T12:12:33.720Z] [DEBUG] Click → TravelDate[0m
-[RUNTIME] STORED → SelectedFlightDate: 26
- Click → retrunTravelDate
-[90m[2025-11-26T12:12:34.175Z] [DEBUG] Click → retrunTravelDate[0m
-[RUNTIME] STORED → SelectedReturnDate: 01
- Click → guest
-[90m[2025-11-26T12:12:40.326Z] [DEBUG] Click → guest[0m
-[RUNTIME] STORED → AdultCounts: 1
- Click → adultplus
-[90m[2025-11-26T12:12:40.833Z] [DEBUG] Click → adultplus[0m
-Adult count increased to 2
-[RUNTIME] STORED → AdultCounts: 2
- Click → childplus
-[90m[2025-11-26T12:12:41.347Z] [DEBUG] Click → childplus[0m
-Child count increased to 1
- Click → businessClassOption
-[90m[2025-11-26T12:12:41.548Z] [DEBUG] Click → businessClassOption[0m
- Click → DoneButton
-[90m[2025-11-26T12:12:41.727Z] [DEBUG] Click → DoneButton[0m
- Click → searchButton
-[90m[2025-11-26T12:12:41.921Z] [DEBUG] Click → searchButton[0m
- Wait For Disappear → loader (Timeout: 60000ms)
-[90m[2025-11-26T12:12:42.931Z] [DEBUG] Wait: hidden → id="Loader"]') | timeout: 60000ms[0m
-[90m[2025-11-26T12:12:44.387Z] [DEBUG] Hidden in 1456ms → id="Loader"]')[0m
-[RUNTIME] STORED → names: Treebo Anjani Fortune Suites
-namesis Treebo Anjani Fortune Suites
-[33m5[39m
-Highest Hotel: { name: [32m'Ramee Guestline Hotel'[39m, price: [33m353010[39m }
-[RUNTIME] STORED → highest_hotel: Ramee Guestline Hotel
-Ramee Guestline Hotel
-📁 Excel saved → C:\enterprise-playwright-tests\test-results\excel\Excel_EasyMyTrip_fight_Booking_Test_2025-11-26T12-12-45-952Z.xlsx
- Wait For Disappear → loader (Timeout: 60000ms)
-[90m[2025-11-26T12:12:46.365Z] [DEBUG] Wait: hidden → id="Loader"]') | timeout: 60000ms[0m
-[90m[2025-11-26T12:12:47.694Z] [DEBUG] Hidden in 1328ms → id="Loader"]')[0m
- Wait For Visible → ContinueTocheckout (Timeout: 60000ms)
-[90m[2025-11-26T12:12:47.698Z] [DEBUG] Wait: visible → Continue To checkout | timeout: 60000ms[0m
-[90m[2025-11-26T12:12:47.785Z] [DEBUG] Visible in 86ms → Continue To checkout[0m
-[RUNTIME] STORED → chectout: 26
-[RUNTIME] STORED → flightnames: Air India
-[RUNTIME] STORED → flightid: AI-436
-[RUNTIME] STORED → flightnames: Air India
-[RUNTIME] STORED → flightid: AI-2642
- Click → ContinueTocheckout
-[90m[2025-11-26T12:12:48.223Z] [DEBUG] Click → ContinueTocheckout[0m
- Wait For Disappear → loader (Timeout: 60000ms)
-[90m[2025-11-26T12:12:50.206Z] [DEBUG] Wait: hidden → id="Loader"]') | timeout: 60000ms[0m
-[90m[2025-11-26T12:12:50.943Z] [DEBUG] Hidden in 737ms → id="Loader"]')[0m
-📁 Excel saved → C:\enterprise-playwright-tests\test-results\excel\Excel_EasyMyTrip_fight_Booking_Test_2025-11-26T12-12-50-943Z.xlsx
+<![CDATA[[36m[2025-12-01T10:33:45.922Z] [INFO]  Opening Base URL: https://showcase.bluecopa.com/welcome[0m
+[90m[2025-12-01T10:33:51.858Z] [DEBUG] Wait: URL contains → "showcase.bluecopa.com"[0m
+[90m[2025-12-01T10:33:51.886Z] [DEBUG] URL matched "showcase.bluecopa.com" in 28ms[0m
+[90m[2025-12-01T10:33:51.887Z] [DEBUG] Click → Login[0m
+[36m[2025-12-01T10:33:52.217Z] [INFO] Logging in as: auto-testadmin@bluecopa.com[0m
+[90m[2025-12-01T10:33:52.219Z] [DEBUG] Fill → <element> | auto-testadmin@bluecopa.com[0m
+[90m[2025-12-01T10:33:55.065Z] [DEBUG] Fill → <element> | Admin@copa123[0m
+[90m[2025-12-01T10:33:55.120Z] [DEBUG] Click → <element>[0m
+[90m[2025-12-01T10:33:56.504Z] [DEBUG] Wait: visible → + Dashboard | timeout: 60000ms[0m
+[90m[2025-12-01T10:34:17.870Z] [DEBUG] Visible in 21366ms → + Dashboard[0m
+[36m[2025-12-01T10:34:17.871Z] [INFO]  Login successful[0m
+Wait For Disappear → spinner (Timeout: 60000ms)
+[90m[2025-12-01T10:34:17.872Z] [DEBUG] Wait: hidden → class,\'fixed\') and contains( | timeout: 60000ms[0m
+[90m[2025-12-01T10:34:18.315Z] [DEBUG] Hidden in 443ms → class,\'fixed\') and contains([0m
+Element disappeared → spinner
+Click → operations
+[90m[2025-12-01T10:34:18.316Z] [DEBUG] Click → operations[0m
+Successfully clicked → operations
+Wait For Visible → workflowName (Timeout: 60000ms)
+[90m[2025-12-01T10:34:18.829Z] [DEBUG] Wait: visible → Workflows | timeout: 60000ms[0m
+[90m[2025-12-01T10:34:19.058Z] [DEBUG] Visible in 229ms → Workflows[0m
+Element visible → workflowName
+Click → workflowName
+[90m[2025-12-01T10:34:19.058Z] [DEBUG] Click → workflowName[0m
+Successfully clicked → workflowName
+Click → newButton
+[90m[2025-12-01T10:34:19.575Z] [DEBUG] Click → newButton[0m
+Successfully clicked → newButton
+Wait For Visible → pencil (Timeout: 60000ms)
+[90m[2025-12-01T10:34:23.915Z] [DEBUG] Wait: visible → class="text-secondary cursor-pointer"]') | timeout: 60000ms[0m
+[90m[2025-12-01T10:34:25.313Z] [DEBUG] Visible in 1397ms → class="text-secondary cursor-pointer"]')[0m
+Element visible → pencil
+Click → pencil
+[90m[2025-12-01T10:34:25.313Z] [DEBUG] Click → pencil[0m
+Successfully clicked → pencil
+Wait For Visible → renameInput (Timeout: 60000ms)
+[90m[2025-12-01T10:34:25.871Z] [DEBUG] Wait: visible → id=\'input_text\']') | timeout: 60000ms[0m
+[90m[2025-12-01T10:34:25.891Z] [DEBUG] Visible in 20ms → id=\'input_text\']')[0m
+Element visible → renameInput
+Clear → renameInput
+[90m[2025-12-01T10:34:25.893Z] [DEBUG] Clear → id=\'input_text\']')[0m
+Successfully cleared → renameInput
+Type → renameInput | Value: Workflow_kizO6Z | Delay: 0ms
+[90m[2025-12-01T10:34:25.995Z] [DEBUG] Type → renameInput | value="Workflow_kizO6Z"[0m
+Successfully typed into → renameInput
+Click → applyButton
+[90m[2025-12-01T10:34:26.997Z] [DEBUG] Click → applyButton[0m
+Successfully clicked → applyButton
+Click → saveWorkflow
+[90m[2025-12-01T10:34:27.132Z] [DEBUG] Click → saveWorkflow[0m
+Successfully clicked → saveWorkflow
+Wait For Text → Workflow saved (Timeout: 60000ms)
+Text appeared → Workflow saved
+Wait For Disappear → spinner (Timeout: 60000ms)
+[90m[2025-12-01T10:34:29.200Z] [DEBUG] Wait: hidden → class,\'fixed\') and contains( | timeout: 60000ms[0m
+[90m[2025-12-01T10:34:29.214Z] [DEBUG] Hidden in 13ms → class,\'fixed\') and contains([0m
+Element disappeared → spinner
+Generated Workflow Name:  Workflow_kizO6Z
+Wait For Disappear → spinner (Timeout: 60000ms)
+[90m[2025-12-01T10:34:29.214Z] [DEBUG] Wait: hidden → class,\'fixed\') and contains( | timeout: 60000ms[0m
+[90m[2025-12-01T10:34:29.231Z] [DEBUG] Hidden in 17ms → class,\'fixed\') and contains([0m
+Element disappeared → spinner
+Click → trigger
+[90m[2025-12-01T10:34:29.232Z] [DEBUG] Click → trigger[0m
+Successfully clicked → trigger
+Click → addTrigger
+[90m[2025-12-01T10:34:29.406Z] [DEBUG] Click → addTrigger[0m
+Successfully clicked → addTrigger
+Click → triggerSelect
+[90m[2025-12-01T10:34:29.544Z] [DEBUG] Click → triggerSelect[0m
+Successfully clicked → triggerSelect
+Click → manualTrigger
+[90m[2025-12-01T10:34:29.687Z] [DEBUG] Click → manualTrigger[0m
+Successfully clicked → manualTrigger
+Click → triggerAdd
+[90m[2025-12-01T10:34:29.853Z] [DEBUG] Click → triggerAdd[0m
+Successfully clicked → triggerAdd
+Wait For Disappear → spinner (Timeout: 60000ms)
+[90m[2025-12-01T10:34:30.007Z] [DEBUG] Wait: hidden → class,\'fixed\') and contains( | timeout: 60000ms[0m
+[90m[2025-12-01T10:34:30.027Z] [DEBUG] Hidden in 20ms → class,\'fixed\') and contains([0m
+Element disappeared → spinner
+Wait For Disappear → spinner (Timeout: 60000ms)
+[90m[2025-12-01T10:34:30.028Z] [DEBUG] Wait: hidden → class,\'fixed\') and contains( | timeout: 60000ms[0m
+[90m[2025-12-01T10:34:30.044Z] [DEBUG] Hidden in 16ms → class,\'fixed\') and contains([0m
+Element disappeared → spinner
+Click → triggerSlot
+[90m[2025-12-01T10:34:30.045Z] [DEBUG] Click → triggerSlot[0m
+Successfully clicked → triggerSlot
+Click → activity
+[90m[2025-12-01T10:34:31.169Z] [DEBUG] Click → activity[0m
+Successfully clicked → activity
+Click → activityItem
+[90m[2025-12-01T10:34:31.380Z] [DEBUG] Click → activityItem[0m
+Successfully clicked → activityItem
+Wait For Visible → activityType (Timeout: 60000ms)
+[90m[2025-12-01T10:34:31.629Z] [DEBUG] Wait: visible → id=\'subType\']') | timeout: 60000ms[0m
+[90m[2025-12-01T10:34:31.661Z] [DEBUG] Visible in 32ms → id=\'subType\']')[0m
+Element visible → activityType
+Click → activityType
+[90m[2025-12-01T10:34:31.662Z] [DEBUG] Click → activityType[0m
+Successfully clicked → activityType
+Click → action
+[90m[2025-12-01T10:34:31.880Z] [DEBUG] Click → action[0m
+Successfully clicked → action
+Type → actionType | Value: Run Recon | Delay: 0ms
+[90m[2025-12-01T10:34:32.191Z] [DEBUG] Type → actionType | value="Run Recon"[0m
+Successfully typed into → actionType
+Click → runRecon
+[90m[2025-12-01T10:34:32.999Z] [DEBUG] Click → runRecon[0m
+Successfully clicked → runRecon
+Wait For Visible → sourceType (Timeout: 60000ms)
+[90m[2025-12-01T10:34:33.232Z] [DEBUG] Wait: visible → id=\'source_type_recon_id\']') | timeout: 60000ms[0m
+[90m[2025-12-01T10:34:33.261Z] [DEBUG] Visible in 29ms → id=\'source_type_recon_id\']')[0m
+Element visible → sourceType
+Click → sourceType
+[90m[2025-12-01T10:34:33.261Z] [DEBUG] Click → sourceType[0m
+Successfully clicked → sourceType
+Click → workspace
+[90m[2025-12-01T10:34:33.463Z] [DEBUG] Click → workspace[0m
+Successfully clicked → workspace
+Wait For Visible → reconId (Timeout: 60000ms)
+[90m[2025-12-01T10:34:33.641Z] [DEBUG] Wait: visible → id=\'recon_id\']') | timeout: 60000ms[0m
+[90m[2025-12-01T10:34:33.673Z] [DEBUG] Visible in 32ms → id=\'recon_id\']')[0m
+Element visible → reconId
+Click → reconId
+[90m[2025-12-01T10:34:33.673Z] [DEBUG] Click → reconId[0m
+Successfully clicked → reconId
+Click → testsigmaRecon
+[90m[2025-12-01T10:34:33.892Z] [DEBUG] Click → testsigmaRecon[0m
+Successfully clicked → testsigmaRecon
+Click → saveWorkflow
+[90m[2025-12-01T10:34:34.143Z] [DEBUG] Click → saveWorkflow[0m
+Successfully clicked → saveWorkflow
+Wait For Disappear → spinner (Timeout: 60000ms)
+[90m[2025-12-01T10:34:34.351Z] [DEBUG] Wait: hidden → class,\'fixed\') and contains( | timeout: 60000ms[0m
+[90m[2025-12-01T10:34:35.741Z] [DEBUG] Hidden in 1390ms → class,\'fixed\') and contains([0m
+Element disappeared → spinner
+Click → publishButton
+[90m[2025-12-01T10:34:35.742Z] [DEBUG] Click → publishButton[0m
+Successfully clicked → publishButton
+Wait For Disappear → spinner (Timeout: 60000ms)
+[90m[2025-12-01T10:34:35.951Z] [DEBUG] Wait: hidden → class,\'fixed\') and contains( | timeout: 60000ms[0m
+[90m[2025-12-01T10:34:36.830Z] [DEBUG] Hidden in 879ms → class,\'fixed\') and contains([0m
+Element disappeared → spinner
+Click → instances
+[90m[2025-12-01T10:34:36.830Z] [DEBUG] Click → instances[0m
+Successfully clicked → instances
+Click → startButton
+[90m[2025-12-01T10:34:37.011Z] [DEBUG] Click → startButton[0m
+Successfully clicked → startButton
+Click → refresh
+[90m[2025-12-01T10:34:38.111Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+Click → refresh
+[90m[2025-12-01T10:34:38.226Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+Click → refresh
+[90m[2025-12-01T10:34:38.364Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:39.032Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:39.653Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:40.292Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:40.928Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:41.559Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:42.193Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:42.821Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:43.449Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:44.081Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:44.710Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:45.327Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:45.948Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:46.571Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:47.185Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:47.797Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:48.424Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:49.044Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:49.698Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:50.374Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:50.991Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:51.622Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:52.254Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:52.886Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:53.511Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:54.189Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:54.886Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:55.559Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:56.197Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:56.823Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:57.458Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:58.097Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:58.715Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:59.341Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:34:59.978Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:00.607Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:01.241Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:01.878Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:02.501Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:03.111Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:03.735Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:04.354Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:04.978Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:05.600Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:06.219Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:06.840Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:07.461Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:08.092Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:08.722Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:09.351Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:09.987Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:10.615Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:11.265Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:11.907Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:12.572Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:13.327Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:14.132Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:14.905Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:15.672Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:16.413Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:17.158Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:17.900Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:18.643Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:19.416Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:20.149Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:20.889Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:21.633Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:22.388Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:23.121Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:23.880Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:24.640Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:25.386Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:26.149Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:27.007Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:27.793Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:28.555Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:29.309Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:30.072Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:30.862Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:31.622Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:32.405Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:33.273Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:34.014Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:34.751Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:35.464Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:36.203Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:36.928Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:37.645Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:38.386Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:39.117Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:39.854Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:40.631Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:41.355Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:42.100Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:42.848Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:43.599Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:44.348Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:45.091Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:45.849Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:46.572Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:47.317Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:48.046Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:48.778Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:49.617Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:50.366Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:51.117Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:51.856Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:52.614Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:53.351Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:54.081Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:54.823Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:55.566Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:56.348Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:57.079Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:57.816Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:58.640Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:35:59.407Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:00.166Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:00.900Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:01.661Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:02.423Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:03.191Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:03.946Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:04.698Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:05.529Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:06.281Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:07.060Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:07.802Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:08.531Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:09.285Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:10.030Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:10.786Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:11.559Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:12.303Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:13.037Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:13.772Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:14.549Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:15.318Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:16.063Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:16.802Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:17.547Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:18.307Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:19.074Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:19.821Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:20.571Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:21.324Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:22.088Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:22.842Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:23.603Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:24.358Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:25.103Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:25.853Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:26.602Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:27.356Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:28.093Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:28.837Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:29.598Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:30.367Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:31.204Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:32.031Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:32.825Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:33.599Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:34.332Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:35.079Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:35.837Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:36.590Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:37.369Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:38.128Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:38.881Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:39.620Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:40.353Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:41.114Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:41.870Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:42.635Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:43.379Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:44.143Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:44.934Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:45.670Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:46.398Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:47.139Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:47.902Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:48.677Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:49.430Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:50.202Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:50.938Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:51.690Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:52.447Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:53.185Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:53.927Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:54.710Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:55.466Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:56.239Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:57.036Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:57.801Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:58.551Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:36:59.298Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:00.050Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:00.801Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:01.535Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:02.297Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:03.062Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:03.810Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:04.561Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:05.300Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:06.050Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:06.793Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:07.535Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:08.292Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:09.030Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:09.765Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:10.530Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:11.293Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:12.044Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:12.801Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:13.555Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:14.298Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:15.045Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:15.789Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:16.545Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:17.289Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:18.036Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:18.798Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:19.547Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:20.287Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:21.033Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:21.781Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:22.522Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:23.282Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:24.048Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:24.783Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:25.530Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:26.302Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:27.031Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:27.766Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:28.529Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:29.262Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:30.000Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:30.744Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:31.509Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:32.270Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:33.040Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:33.784Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:34.517Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:35.266Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:36.031Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:36.786Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:37.555Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:38.298Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:39.050Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:39.795Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:40.546Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:41.301Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:42.059Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:42.830Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:43.565Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:44.317Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:45.084Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:45.842Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:46.574Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:47.309Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:48.042Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:48.784Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:49.513Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:50.250Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:50.997Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:51.731Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:52.464Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:53.196Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:53.928Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:54.661Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:55.434Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:56.160Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:56.948Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:57.712Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:58.547Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:37:59.276Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:38:00.047Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:38:00.875Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Click → refresh
+[90m[2025-12-01T10:38:01.657Z] [DEBUG] Click → refresh[0m
+Successfully clicked → refresh
+pause → 500ms
+Full Screenshot → workflow_completed_1764585482379.png
 ]]>
 </system-out>
 </testcase>
