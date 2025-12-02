@@ -69,6 +69,7 @@ pipeline {
                     archiveArtifacts artifacts: 'allure-results/**', allowEmptyArchive: true
                     archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
                     archiveArtifacts artifacts: 'test-results/**', allowEmptyArchive: true
+                    archiveArtifacts artifacts: 'playwright-report.zip', allowEmptyArchive: true
                 }
             }
         }
@@ -90,32 +91,33 @@ pipeline {
 
     post {
 
-        /* -----------------------------------------------------------
-           ALWAYS — Collect test summary
-        ----------------------------------------------------------- */
         always {
             script {
                 echo "🔍 Collecting test summary..."
 
-                def testResultSummary = junit(testResults: 'reports/results.xml', allowEmptyResults: true)
+                def result = junit(testResults: 'reports/results.xml', allowEmptyResults: true)
 
-                env.TEST_TOTAL   = testResultSummary.totalCount?.toString() ?: "0"
-                env.TEST_FAILED  = testResultSummary.failCount?.toString()  ?: "0"
-                env.TEST_SKIPPED = testResultSummary.skipCount?.toString() ?: "0"
-                env.TEST_PASSED  = testResultSummary.passCount?.toString()  ?: "0"
+                env.TEST_TOTAL = result.totalCount?.toString() ?: "0"
+                env.TEST_FAILED = result.failCount?.toString() ?: "0"
+                env.TEST_SKIPPED = result.skipCount?.toString() ?: "0"
+                env.TEST_PASSED = result.passCount?.toString() ?: "0"
                 env.BUILD_DURATION = currentBuild.durationString.replace(' and counting', '')
 
                 echo "📊 Test Results:"
-                echo "   Total: ${env.TEST_TOTAL}"
-                echo "   Passed: ${env.TEST_PASSED}"
-                echo "   Failed: ${env.TEST_FAILED}"
-                echo "   Skipped: ${env.TEST_SKIPPED}"
+                echo "Total: ${env.TEST_TOTAL}"
+                echo "Passed: ${env.TEST_PASSED}"
+                echo "Failed: ${env.TEST_FAILED}"
+                echo "Skipped: ${env.TEST_SKIPPED}"
+
+                // Create Playwright Report ZIP
+                bat 'powershell Compress-Archive -Path playwright-report\\* -DestinationPath playwright-report.zip -Force'
             }
         }
 
-        /* -----------------------------------------------------------
-           SUCCESS EMAIL — HTML TEMPLATE + ZIP ATTACHMENT
-        ----------------------------------------------------------- */
+
+        // -------------------------------------------------------
+        // SUCCESS EMAIL
+        // -------------------------------------------------------
         success {
             script {
                 withCredentials([usernamePassword(
@@ -127,49 +129,43 @@ pipeline {
                     emailext(
                         to: 'sairaj@syslatech.com',
                         from: "${SMTP_USER}",
-                        replyTo: "${SMTP_USER}",
-                        subject: "✔ SUCCESS — Playwright CI — Build #${env.BUILD_NUMBER}",
-                        mimeType: "text/html",
-                        attachmentsPattern: "playwright-report.zip",
+                        subject: "✅ SUCCESS — Playwright CI — Build #${env.BUILD_NUMBER}",
+                        mimeType: 'text/html',
                         body: """
-<html>
-<body style='font-family:Arial; font-size:14px;'>
+<html><body style="font-family:Arial; font-size:14px;">
+<h2 style="color:green;">Playwright Automation - SUCCESS</h2>
 
-<h2 style='color:green;'>Playwright Automation — SUCCESS</h2>
+<b>Build #${env.BUILD_NUMBER}</b><br>
+Duration: ${env.BUILD_DURATION}<br><br>
 
-<table border='1' cellpadding='6' cellspacing='0'>
-<tr style='background:#e6ffe6;'>
-  <th>Total</th><th>Passed</th><th>Failed</th><th>Skipped</th>
-</tr>
+<table border="1" cellpadding="6">
+<tr><th>Total</th><th>Passed</th><th>Failed</th><th>Skipped</th></tr>
 <tr>
-  <td>${env.TEST_TOTAL}</td>
-  <td style='color:green;'>${env.TEST_PASSED}</td>
-  <td style='color:red;'>${env.TEST_FAILED}</td>
-  <td>${env.TEST_SKIPPED}</td>
+<td>${env.TEST_TOTAL}</td>
+<td>${env.TEST_PASSED}</td>
+<td>${env.TEST_FAILED}</td>
+<td>${env.TEST_SKIPPED}</td>
 </tr>
 </table>
 
 <h3>Reports</h3>
 <ul>
-  <li><a href='${env.BUILD_URL}allure'>Allure Report</a></li>
-  <li><a href='${env.BUILD_URL}artifact/playwright-report/index.html'>Playwright HTML Report</a></li>
-  <li><a href='${env.BUILD_URL}console'>Console Output</a></li>
+<li><a href="${env.BUILD_URL}allure">Allure Report</a></li>
+<li><a href="${env.BUILD_URL}artifact/playwright-report/index.html">Playwright HTML Report</a></li>
+<li><a href="${env.BUILD_URL}console">Console Output</a></li>
 </ul>
 
-<p>Build #: <b>${env.BUILD_NUMBER}</b></p>
-<p>Duration: <b>${env.BUILD_DURATION}</b></p>
-
-</body>
-</html>
-"""
+</body></html>
+                        """
                     )
                 }
             }
         }
 
-        /* -----------------------------------------------------------
-           FAILURE EMAIL — HTML + LOG + SCREENSHOTS + TRACE
-        ----------------------------------------------------------- */
+
+        // -------------------------------------------------------
+        // FAILURE EMAIL
+        // -------------------------------------------------------
         failure {
             script {
                 withCredentials([usernamePassword(
@@ -181,60 +177,54 @@ pipeline {
                     emailext(
                         to: 'sairaj@syslatech.com',
                         from: "${SMTP_USER}",
-                        replyTo: "${SMTP_USER}",
-                        subject: "✘ FAILED — Playwright CI — Build #${env.BUILD_NUMBER}",
-                        mimeType: "text/html",
+                        subject: "❌ FAILED — Playwright CI — Build #${env.BUILD_NUMBER}",
+                        mimeType: 'text/html',
                         attachLog: true,
                         compressLog: true,
-                        attachmentsPattern: """
-                            playwright-report.zip,
-                            test-results/**/*.png,
-                            test-results/**/*.zip
-                        """,
+                        attachmentsPattern: "playwright-report.zip, test-results/**/*.png, test-results/**/*.zip",
                         body: """
-<html>
-<body style='font-family:Arial; font-size:14px;'>
+<html><body style="font-family:Arial;">
 
-<h2 style='color:red;'>Playwright Automation — FAILED</h2>
+<h2 style="color:red;">Playwright Automation - FAILURE</h2>
 
-<table border='1' cellpadding='6' cellspacing='0'>
-<tr style='background:#ffe6e6;'>
-  <th>Total</th><th>Passed</th><th>Failed</th><th>Skipped</th>
-</tr>
+<b>Build #${env.BUILD_NUMBER}</b><br>
+Duration: ${env.BUILD_DURATION}<br><br>
+
+<table border="1" cellpadding="6">
+<tr><th>Total</th><th>Passed</th><th>Failed</th><th>Skipped</th></tr>
 <tr>
-  <td>${env.TEST_TOTAL}</td>
-  <td style='color:green;'>${env.TEST_PASSED}</td>
-  <td style='color:red; font-weight:bold;'>${env.TEST_FAILED}</td>
-  <td>${env.TEST_SKIPPED}</td>
+<td>${env.TEST_TOTAL}</td>
+<td>${env.TEST_PASSED}</td>
+<td style="color:red;">${env.TEST_FAILED}</td>
+<td>${env.TEST_SKIPPED}</td>
 </tr>
 </table>
 
-<h3>Attached Debug Files</h3>
-<ul>
- <li>Screenshots (PNG)</li>
- <li>Trace Files (ZIP)</li>
- <li>Playwright Report ZIP</li>
- <li>Console Log</li>
-</ul>
-
 <h3>Reports</h3>
 <ul>
-  <li><a href='${env.BUILD_URL}allure'>Allure Report</a></li>
-  <li><a href='${env.BUILD_URL}artifact/playwright-report/index.html'>Playwright HTML Report</a></li>
-  <li><a href='${env.BUILD_URL}console'>Console Output</a></li>
+<li><a href="${env.BUILD_URL}allure">Allure Report</a></li>
+<li><a href="${env.BUILD_URL}artifact/playwright-report/index.html">Playwright Report</a></li>
+<li><a href="${env.BUILD_URL}console">Console Output</a></li>
 </ul>
 
-</body>
-</html>
-"""
+<h3>Attachments</h3>
+<ul>
+<li>Playwright Report ZIP</li>
+<li>Screenshots (*.png)</li>
+<li>Traces (*.zip)</li>
+</ul>
+
+</body></html>
+                        """
                     )
                 }
             }
         }
 
-        /* -----------------------------------------------------------
-           UNSTABLE EMAIL — HTML + REPORT LINKS + ATTACHMENTS
-        ----------------------------------------------------------- */
+
+        // -------------------------------------------------------
+        // UNSTABLE EMAIL (Some tests failed)
+        // -------------------------------------------------------
         unstable {
             script {
                 withCredentials([usernamePassword(
@@ -246,47 +236,47 @@ pipeline {
                     emailext(
                         to: 'sairaj@syslatech.com',
                         from: "${SMTP_USER}",
-                        replyTo: "${SMTP_USER}",
-                        subject: "⚠ UNSTABLE — Playwright CI — Build #${env.BUILD_NUMBER}",
-                        mimeType: "text/html",
-                        attachmentsPattern: """
-                            playwright-report.zip,
-                            test-results/**/*.png,
-                            test-results/**/*.zip
-                        """,
+                        subject: "⚠️ UNSTABLE — Playwright CI — Build #${env.BUILD_NUMBER}",
+                        mimeType: 'text/html',
+                        attachmentsPattern: "playwright-report.zip, test-results/**/*.png, test-results/**/*.zip",
                         body: """
-<html>
-<body style='font-family:Arial; font-size:14px;'>
+<html><body style="font-family:Arial;">
 
-<h2 style='color:orange;'>Playwright Automation — UNSTABLE</h2>
+<h2 style="color:orange;">Playwright Automation - UNSTABLE</h2>
 
-<table border='1' cellpadding='6' cellspacing='0'>
-<tr style='background:#fff4cc;'>
-  <th>Total</th><th>Passed</th><th>Failed</th><th>Skipped</th>
-</tr>
+<b>Build #${env.BUILD_NUMBER}</b><br>
+Duration: ${env.BUILD_DURATION}<br><br>
+
+<table border="1" cellpadding="6">
+<tr><th>Total</th><th>Passed</th><th>Failed</th><th>Skipped</th></tr>
 <tr>
-  <td>${env.TEST_TOTAL}</td>
-  <td>${env.TEST_PASSED}</td>
-  <td style='color:red;'>${env.TEST_FAILED}</td>
-  <td>${env.TEST_SKIPPED}</td>
+<td>${env.TEST_TOTAL}</td>
+<td>${env.TEST_PASSED}</td>
+<td style="color:red;">${env.TEST_FAILED}</td>
+<td>${env.TEST_SKIPPED}</td>
 </tr>
 </table>
 
 <h3>Reports</h3>
 <ul>
-  <li><a href='${env.BUILD_URL}allure'>Allure Report</a></li>
-  <li><a href='${env.BUILD_URL}artifact/playwright-report/index.html'>Playwright HTML Report</a></li>
-  <li><a href='${env.BUILD_URL}console'>Console Output</a></li>
+<li><a href="${env.BUILD_URL}allure">Allure Report</a></li>
+<li><a href="${env.BUILD_URL}artifact/playwright-report/index.html">Playwright Report</a></li>
+<li><a href="${env.BUILD_URL}console">Console Output</a></li>
 </ul>
 
-<p>Review failing tests.</p>
+<h3>Attachments</h3>
+<ul>
+<li>Playwright Report ZIP</li>
+<li>Screenshots (*.png)</li>
+<li>Traces (*.zip)</li>
+</ul>
 
-</body>
-</html>
-"""
+</body></html>
+                        """
                     )
                 }
             }
         }
+
     }
 }
