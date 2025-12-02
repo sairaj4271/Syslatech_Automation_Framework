@@ -14,10 +14,82 @@ pipeline {
     }
 
     stages {
-        /* same stages as your pipeline (unchanged) */
+
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/sairaj4271/Syslatech_Playwright.git'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                bat 'npm install'
+            }
+        }
+
+        stage('Install Playwright Browsers') {
+            steps {
+                bat 'npx playwright install --with-deps'
+            }
+        }
+
+        stage('Run Playwright Tests') {
+            steps {
+                catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+                    bat 'npx playwright test --retries=2'
+                }
+            }
+        }
+
+        stage('Generate Allure Report') {
+            steps {
+                script {
+                    try {
+                        bat '''
+                            if exist allure-report rmdir /s /q allure-report
+                            allure generate allure-results --clean -o allure-report
+                        '''
+                    } catch (Exception e) {
+                        echo "⚠ Allure CLI not found, using Jenkins plugin"
+                    }
+                }
+            }
+        }
+
+        stage('Archive Reports') {
+            steps {
+                script {
+                    try {
+                        junit allowEmptyResults: true, testResults: 'reports/results.xml'
+                    } catch (Exception e) {
+                        echo "⚠ JUnit report archiving failed: ${e.message}"
+                    }
+
+                    archiveArtifacts artifacts: 'allure-results/**', allowEmptyArchive: true
+                    archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
+                    archiveArtifacts artifacts: 'test-results/**', allowEmptyArchive: true
+                }
+            }
+        }
+
+        stage('Publish Allure Report') {
+            steps {
+                script {
+                    try {
+                        allure includeProperties: false,
+                               jdk: '',
+                               results: [[path: 'allure-results']]
+                    } catch (Exception e) {
+                        echo "⚠ Allure plugin publish failed: ${e.message}"
+                    }
+                }
+            }
+        }
     }
 
     post {
+
         always {
             script {
                 echo "🔍 Collecting test summary..."
@@ -40,7 +112,6 @@ pipeline {
 
         success {
             script {
-
                 withCredentials([usernamePassword(
                     credentialsId: 'gmail-app-password',
                     usernameVariable: 'SMTP_USER',
@@ -51,43 +122,15 @@ pipeline {
                         to: 'sairaj@syslatech.com',
                         from: "${SMTP_USER}",
                         replyTo: "${SMTP_USER}",
-                        subject: "✅ Playwright CI — SUCCESS — Build #${env.BUILD_NUMBER}",
-                        body: """
-Hello Sai,
-
-Your Playwright test pipeline completed successfully! 🎉
-
-Test Summary:
--------------
-Total:   ${env.TEST_TOTAL}
-Passed:  ${env.TEST_PASSED}
-Failed:  ${env.TEST_FAILED}
-Skipped: ${env.TEST_SKIPPED}
-
-Build: #${env.BUILD_NUMBER}
-Duration: ${env.BUILD_DURATION}
-
-Reports:
-- Allure: ${env.BUILD_URL}allure
-- HTML: ${env.BUILD_URL}artifact/playwright-report/index.html
-- Console: ${env.BUILD_URL}console
-
-Great job! 👍
-
----
-Jenkins Automated Notification
-                        """,
-                        mimeType: 'text/plain'
+                        subject: "SUCCESS — Build #${env.BUILD_NUMBER}",
+                        body: "Playwright CI Success!"
                     )
                 }
-
-                echo "✅ Email sent (SUCCESS)"
             }
         }
 
         failure {
             script {
-
                 withCredentials([usernamePassword(
                     credentialsId: 'gmail-app-password',
                     usernameVariable: 'SMTP_USER',
@@ -98,40 +141,17 @@ Jenkins Automated Notification
                         to: 'sairaj@syslatech.com',
                         from: "${SMTP_USER}",
                         replyTo: "${SMTP_USER}",
-                        subject: "❌ Playwright CI — FAILED — Build #${env.BUILD_NUMBER}",
-                        body: """
-Hello ,
-
-Your Playwright test pipeline FAILED ⚠️
-
-Test Summary:
--------------
-Total:   ${env.TEST_TOTAL}
-Passed:  ${env.TEST_PASSED}
-Failed:  ${env.TEST_FAILED}
-Skipped: ${env.TEST_SKIPPED}
-
-Check reports here:
-- Allure Report: ${env.BUILD_URL}allure
-- Playwright Report: ${env.BUILD_URL}artifact/playwright-report/index.html
-- Console: ${env.BUILD_URL}console
-
----
-Jenkins Automated Notification
-                        """,
-                        mimeType: 'text/plain',
+                        subject: "FAILED — Build #${env.BUILD_NUMBER}",
+                        body: "Playwright CI Failed!",
                         attachLog: true,
                         compressLog: true
                     )
                 }
-
-                echo "📩 Email sent (FAILURE)"
             }
         }
 
         unstable {
             script {
-
                 withCredentials([usernamePassword(
                     credentialsId: 'gmail-app-password',
                     usernameVariable: 'SMTP_USER',
@@ -142,32 +162,10 @@ Jenkins Automated Notification
                         to: 'sairaj@syslatech.com',
                         from: "${SMTP_USER}",
                         replyTo: "${SMTP_USER}",
-                        subject: "⚠️ Playwright CI — UNSTABLE — Build #${env.BUILD_NUMBER}",
-                        body: """
-Hello Sai,
-
-Your pipeline is UNSTABLE.
-
-Test Summary:
--------------
-Total:   ${env.TEST_TOTAL}
-Passed:  ${env.TEST_PASSED}
-Failed:  ${env.TEST_FAILED}
-Skipped: ${env.TEST_SKIPPED}
-
-Reports:
-- Allure Report: ${env.BUILD_URL}allure
-- HTML: ${env.BUILD_URL}artifact/playwright-report/index.html
-- Console: ${env.BUILD_URL}console
-
----
-Jenkins Automated Notification
-                        """,
-                        mimeType: 'text/plain'
+                        subject: "UNSTABLE — Build #${env.BUILD_NUMBER}",
+                        body: "Some tests failed."
                     )
                 }
-
-                echo "📩 Email sent (UNSTABLE)"
             }
         }
     }
