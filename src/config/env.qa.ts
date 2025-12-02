@@ -17,7 +17,7 @@ export const qaConfig: AppConfig = {
   },
 
   browser: {
-    headless: true,
+    headless: false,
     slowMo: 0,
     timeout: 600000,
   },

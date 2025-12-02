@@ -105,7 +105,7 @@ export class EasyMyTripPageForFlight extends BasePage {
         //Runtime.set("SelectedReturnDate", formatDateAfterDays(5,"dd"));
 
        const   SelectedReturnDate  =   await  formatDateAfterDays(5,"dd")
-        await this.page.locator(`(//span[contains(text(),"${SelectedReturnDate}") and contains(@class, "mat-calendar-body-cell-content mat-focus-indicator mat-calendar-body")])[1]`).click();
+        await this.page.locator(`(//span[contains(text(),"${SelectedReturnDate}") and contains(@class, "mat-calendar-body-cell-content mat-focus-indicator")])[1]`).click();
         
    }
 

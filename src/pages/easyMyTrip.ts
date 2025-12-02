@@ -106,7 +106,7 @@ export class EasyMyTripPage extends BasePage {
     await this.page.locator(`(//*[text()="${checkInDate}"])[1]`).click();
     await this.click(this.check_out);
     const checkOutDate = formatDateAfterDays(3, "dd");
-    await this.page.locator(`(//*[text()="${checkOutDate}"])[1]`).click();
+    await this.page.locator(`(//*[text()="${checkOutDate}"])[last()]`).click();
     await this.storeTextContent(this.Check_in, "RawCheckIn");
     await this.storeTextContent(this.check_Out, "RawCheckOut");
   Runtime.set("CleanCheckIn", cleanAndConvertToDDMMYYYY($("RawCheckIn")));
