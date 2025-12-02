@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🚀 Enterprise Playwright Automation Framework
 
 > **A production-grade test automation framework built with Playwright & TypeScript, following industry best practices and enterprise design patterns.**
@@ -646,4 +647,6 @@ Contributions are welcome! Please follow these guidelines:
 5. Open a Pull Request
 
 ---
+=======
+>>>>>>> 6ec6371aa28d5a4599278bc10e404bdd88da8029
 
