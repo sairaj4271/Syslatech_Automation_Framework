@@ -5,8 +5,8 @@ pipeline {
         PATH = "C:/Program Files/nodejs/;${env.PATH}"
         CI   = "true"
 
-        // ✔ MULTIPLE EMAIL RECIPIENTS (semicolon-separated)
-        RECIPIENTS = "sairaj@syslatech.com;deepikadhar@syslatech.com"
+        // MULTIPLE RECIPIENTS — NO SPACES AFTER COMMA
+        RECIPIENTS = "sairaj@syslatech.com,deepikadhar@syslatech.com"
     }
 
     options {
@@ -76,11 +76,15 @@ pipeline {
         }
     }
 
+    // ================================
+    // POST ACTIONS (ALL BUILDS)
+    // ================================
     post {
 
+        // Always collect summary & ZIP
         always {
             script {
-                echo "📊 Collecting test summary..."
+                echo "🔍 Collecting test summary..."
 
                 def summary = junit(testResults: 'reports/results.xml', allowEmptyResults: true)
 
@@ -91,34 +95,40 @@ pipeline {
                 env.BUILD_DURATION = currentBuild.durationString.replace(' and counting', '')
                 env.BUILD_STATUS   = currentBuild.currentResult ?: "UNKNOWN"
 
+                echo "📊 Test Results:"
                 echo "Total: ${env.TEST_TOTAL}"
                 echo "Passed: ${env.TEST_PASSED}"
                 echo "Failed: ${env.TEST_FAILED}"
                 echo "Skipped: ${env.TEST_SKIPPED}"
+                echo "Status: ${env.BUILD_STATUS}"
 
-                // Create ZIP without failing pipeline
-                echo "📦 Creating ZIP..."
+                // ---------------------------
+                // Create ZIP using TAR (NO POWERSHELL)
+                // ---------------------------
+                echo "📦 Creating ZIP (safe mode)..."
 
                 try {
                     bat '''
                         @echo off
                         if exist playwright-report (
-                            echo Creating zip...
+                            echo Creating ZIP...
                             tar -a -cf playwright-report.zip playwright-report
+                            echo ZIP created.
                         ) else (
-                            echo No report folder found.
+                            echo No playwright-report directory found.
                         )
                     '''
+
                     archiveArtifacts artifacts: 'playwright-report.zip', allowEmptyArchive: true
                 } catch (Exception e) {
-                    echo "⚠ ZIP creation failed (ignored): ${e.message}"
+                    echo "⚠ ZIP creation skipped: ${e.message}"
                 }
             }
         }
 
-        // =====================================================================
+        // ==========================================================
         // SUCCESS EMAIL
-        // =====================================================================
+        // ==========================================================
         success {
             script {
                 withCredentials([usernamePassword(
@@ -126,6 +136,7 @@ pipeline {
                     usernameVariable: 'SMTP_USER',
                     passwordVariable: 'SMTP_PASS'
                 )]) {
+
                     emailext(
                         to: env.RECIPIENTS,
                         from: "${SMTP_USER}",
@@ -137,9 +148,9 @@ pipeline {
             }
         }
 
-        // =====================================================================
+        // ==========================================================
         // FAILURE EMAIL
-        // =====================================================================
+        // ==========================================================
         failure {
             script {
                 withCredentials([usernamePassword(
@@ -147,6 +158,7 @@ pipeline {
                     usernameVariable: 'SMTP_USER',
                     passwordVariable: 'SMTP_PASS'
                 )]) {
+
                     emailext(
                         to: env.RECIPIENTS,
                         from: "${SMTP_USER}",
@@ -161,16 +173,17 @@ pipeline {
             }
         }
 
-        // =====================================================================
+        // ==========================================================
         // UNSTABLE EMAIL
-        // =====================================================================
+        // ==========================================================
         unstable {
             script {
                 withCredentials([usernamePassword(
                     credentialsId: 'gmail-app-password',
-                    usernameVariable: 'SMTP_USER",
-                    passwordVariable: "SMTP_PASS"
+                    usernameVariable: 'SMTP_USER',
+                    passwordVariable: 'SMTP_PASS'
                 )]) {
+
                     emailext(
                         to: env.RECIPIENTS,
                         from: "${SMTP_USER}",
@@ -187,61 +200,59 @@ pipeline {
     }
 }
 
-// ============================================================================
-// HTML Email Template Generator
-// ============================================================================
+/////////////////////////////////////////////////////////
+// EMAIL TEMPLATE FUNCTION
+/////////////////////////////////////////////////////////
+
 def generateHtmlEmail(String status) {
 
-    def statusColor = [
+    def color = [
         "SUCCESS":  "#1a9c33",
         "FAILED":   "#d52828",
         "UNSTABLE": "#d58f00"
     ][status]
 
     def title = [
-        "SUCCESS":  "🎉 Playwright Test Execution — SUCCESS",
-        "FAILED":   "❌ Playwright Test Execution — FAILED",
-        "UNSTABLE": "⚠️ Playwright Test Execution — UNSTABLE"
+        "SUCCESS":  "🎉 Playwright Execution — SUCCESS",
+        "FAILED":   "❌ Playwright Execution — FAILED",
+        "UNSTABLE": "⚠️ Playwright Execution — UNSTABLE"
     ][status]
 
     return """
 <html>
 <head>
 <style>
-  body { font-family: Arial; font-size: 14px; }
-  h2 { color: ${statusColor}; }
-  table { border-collapse: collapse; width: 100%; }
-  th, td { border: 1px solid #ddd; padding: 8px; }
-  th { background: #f5f5f5; }
+body { font-family: Arial; }
+h2 { color: ${color}; }
+table { border-collapse: collapse; width: 100%; }
+th, td { border: 1px solid #ccc; padding: 8px; }
+th { background: #f4f4f4; }
 </style>
 </head>
 <body>
 
 <h2>${title}</h2>
 
-<h3>📊 Test Summary</h3>
+<h3>📊 Summary</h3>
 <table>
 <tr><th>Property</th><th>Value</th></tr>
-<tr><td>Build Number</td><td>${env.BUILD_NUMBER}</td></tr>
 <tr><td>Status</td><td>${env.BUILD_STATUS}</td></tr>
-<tr><td>Total</td><td>${env.TEST_TOTAL}</td></tr>
+<tr><td>Total Tests</td><td>${env.TEST_TOTAL}</td></tr>
 <tr><td>Passed</td><td>${env.TEST_PASSED}</td></tr>
 <tr><td>Failed</td><td>${env.TEST_FAILED}</td></tr>
 <tr><td>Skipped</td><td>${env.TEST_SKIPPED}</td></tr>
 <tr><td>Duration</td><td>${env.BUILD_DURATION}</td></tr>
-<tr><td>Browser</td><td>chromium</td></tr>
 </table>
 
 <h3>📄 Reports</h3>
 <ul>
 <li><a href="${env.BUILD_URL}artifact/playwright-report/index.html">Playwright HTML Report</a></li>
 <li><a href="${env.BUILD_URL}allure">Allure Report</a></li>
-<li><a href="${env.BUILD_URL}artifact">Artifacts</a></li>
+<li><a href="${env.BUILD_URL}artifact">Artifacts Folder</a></li>
 <li><a href="${env.BUILD_URL}console">Console Log</a></li>
 </ul>
 
-<p style="font-size:12px;color:#888;">Jenkins Automated Notification</p>
-
-</body></html>
+</body>
+</html>
 """
 }
