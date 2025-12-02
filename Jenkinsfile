@@ -161,7 +161,7 @@ pipeline {
                 )]) {
 
                     emailext(
-                        to: 'deepikadhar@syslatech.com',
+                        to: 'sairaj@syslatech.com',
                         from: "${SMTP_USER}",
                         replyTo: "${SMTP_USER}",
                         subject: "✅ Playwright CI — SUCCESS — Build #${env.BUILD_NUMBER}",
@@ -253,7 +253,7 @@ pipeline {
                 )]) {
 
                     emailext(
-                        to: 'deepikadhar@syslatech.com',
+                        to: 'sairaj@syslatech.com',
                         from: "${SMTP_USER}",
                         replyTo: "${SMTP_USER}",
                         subject: "❌ Playwright CI — FAILED — Build #${env.BUILD_NUMBER}",
@@ -346,7 +346,7 @@ pipeline {
                 )]) {
 
                     emailext(
-                        to: 'deepikadhar@syslatech.com',
+                        to: 'sairaj@syslatech.com',
                         from: "${SMTP_USER}",
                         replyTo: "${SMTP_USER}",
                         subject: "⚠️ Playwright CI — UNSTABLE — Build #${env.BUILD_NUMBER}",
